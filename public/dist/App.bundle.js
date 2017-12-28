@@ -72,11 +72,50 @@
 
 __webpack_require__(1);
 
+var _autocomplete = __webpack_require__(3);
+
+var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _autocomplete2.default)(document.querySelector('#address'), document.querySelector('#lat'), document.querySelector('#lng'));
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 2 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function autocomplete(input, latInput, lngInput) {
+    if (!input) return; //skip this fn from running if there is no input on the page
+    var dropdown = new google.maps.places.Autocomplete(input);
+
+    dropdown.addListener('place_changed', function () {
+        var place = dropdown.getPlace();
+        latInput.value = place.geometry.location.lat();
+        lngInput.value = place.geometry.location.lng();
+    });
+
+    // if someone hits enter on the address field - don't submit the form
+    input.addEventListener('keydown', function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+        };
+    });
+}
+
+exports.default = autocomplete;
 
 /***/ })
 /******/ ]);

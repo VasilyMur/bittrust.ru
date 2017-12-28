@@ -1,0 +1,21 @@
+mixin companyForm(company = {})
+  form(action=`/add/${company._id || ''}` method="POST" class="card")
+    label(for="name") Название
+    input(type="text" name="name" value=company.name)
+    label(for="description") Описание
+    textarea(name="description")= company.description
+    //- address, lng and lat
+    label(for="address") Адрес
+    input(type="text" id="address" name="location[address]" value=(company.location && company.location.address))
+    label(for="lng") Долгота
+    input(type="text" id="lng" name="location[coordinates][0]" value=(company.location && company.location.coordinates[0]) required)
+    label(for="lat") Широта
+    input(type="text" id="lat" name="location[coordinates][1]" value=(company.location && company.location.coordinates[1]) required)
+    - const choices = ['Арбатская', 'Фрунзенская', 'Чеховская'];
+    - const tags = company.tags || []
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
+          label(for=choice) #{choice}
+    input(type="submit" value="Сохранить" class="button")

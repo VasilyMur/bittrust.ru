@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${school.photo || 'school.png'}`)
+      h2.title.title--single
+        a(href=`/schools/${school.slug}`) #{title}
+  .single__details.inner
+    img.single__map(src=h.staticMap(school.location.coordinates))
+    p.single__location= school.location.address
+    p= school.description
+
+    if school.tags
+      ul.tags
+        each tag in school.tags
+          li.tag
+            a.tag__link(href=`/tags/${tag}`)
+              span.tag__text= tag
+            
+  

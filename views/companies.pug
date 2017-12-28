@@ -1,0 +1,9 @@
+extends layout
+
+include mixins/_companyCard
+block content
+  .inner
+    h2 #{title}
+    .companies
+      each company in companies 
+        +companyCard(company)
