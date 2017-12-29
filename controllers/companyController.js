@@ -1,11 +1,69 @@
 const mongoose = require('mongoose');
 const Company = mongoose.model('Company');
 
+// upload photos package
+const multer = require('multer');
+// resize package
+const Jimp = require('jimp');
+// unique identifier package - prevent from same photo file names
+const uuid = require('uuid');
 
+const multerOptions = {
+    storage: multer.memoryStorage(),
+    fileFilter: function(req, file, next) {
+        const isPhoto = file.mimetype.startsWith('image/');
+        if (isPhoto) {
+            next(null, true);
+        } else {
+            next({ message: 'Недопустимый формат' }, false);
+        }
+    }
+}
+
+
+// Главная Страница - Все Компании
+exports.getCompanies = async (req, res) => {
+  try {
+    const companies = await Company.find();
+    res.render('companies', {title: 'Все Компании', companies});
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
+// Зашли в Раздел Добавить Компанию
 exports.addCompany = (req, res) => {
   res.render('editCompany', {title: 'Добавить Компанию'});
 };
 
+
+
+// stores image file into memory (doesn't save)
+exports.upload = multer(multerOptions).single('photo');
+// resize uploaded photos
+exports.resize = async (req, res, next) => {
+  try {
+    // check if there is no new file to resize
+    if( !req.file ) {
+        next(); //skip to the next middleware
+        return;
+    }
+
+    const extension = req.file.mimetype.split('/')[1];
+    req.body.photo = `${uuid.v4()}.${extension}`;
+
+    // now we resize
+    const photo = await Jimp.read(req.file.buffer);
+    await photo.resize(800, Jimp.AUTO);
+    await photo.write(`./public/uploads/${req.body.photo}`); // save
+    // once we have written the photo to our filesystem keep going!
+    next();
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
+// POST: Заполнили данные в разделе ADD и Нажали Submit - чтобы добавить Компанию
 exports.createCompany = async (req, res) => {
   try {
     const company = await (new Company(req.body)).save();
@@ -22,15 +80,8 @@ exports.createCompany = async (req, res) => {
   }
 };
 
-exports.getCompanies = async (req, res) => {
-  try {
-    const companies = await Company.find();
-    res.render('companies', {title: 'Все Компании', companies});
-  } catch(e) {
-    res.render('error', {message:'Something went wrong'});
-  }
-};
 
+// Зашли в раздел Edit существующей компании
 exports.editCompany = async (req, res) => {
   try {
     const company = await Company.findOne({ _id: req.params.id });
@@ -40,11 +91,12 @@ exports.editCompany = async (req, res) => {
   }
 };
 
+// POST: Сделали Submit обновленных данных по Компании из раздела Edit
 exports.updateCompany = async (req, res) => {
   try {
     //Set the location data to be a point (dissapears after school update)
     req.body.location.type = 'Point';
-    
+
     const company = await Company.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
     req.flash('success', `Информация о компании <strong>${company.name}</strong> обнавлена! <a href="/companies/${company.slug}">Посмотреть компанию</a>`);
     res.redirect(`/companies/${company._id}/edit`);

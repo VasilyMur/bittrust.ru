@@ -33,7 +33,8 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: 'Введите адрес!'
     }
-  }
+  },
+  photo: String
 
 });
 

@@ -72,7 +72,7 @@
 
 __webpack_require__(1);
 
-var _autocomplete = __webpack_require__(3);
+var _autocomplete = __webpack_require__(2);
 
 var _autocomplete2 = _interopRequireDefault(_autocomplete);
 
@@ -87,8 +87,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

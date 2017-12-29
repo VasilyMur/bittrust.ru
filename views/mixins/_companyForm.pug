@@ -1,9 +1,14 @@
 mixin companyForm(company = {})
-  form(action=`/add/${company._id || ''}` method="POST" class="card")
+  form(action=`/add/${company._id || ''}` method="POST" class="card" enctype="multipart/form-data")
     label(for="name") Название
     input(type="text" name="name" value=company.name)
     label(for="description") Описание
     textarea(name="description")= company.description
+    //- Image Upload
+    label(for="photo") Photo
+      input(type="file" name="photo" id="photo" accept="image/jpg, image/jpeg, image/png")
+      if company.photo
+        img(src=`/uploads/${company.photo}`, alt=company.name, width=200)
     //- address, lng and lat
     label(for="address") Адрес
     input(type="text" id="address" name="location[address]" value=(company.location && company.location.address))
