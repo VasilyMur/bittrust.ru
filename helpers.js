@@ -21,6 +21,6 @@ exports.menu = [
   //{ slug: '/companies', title: 'Компании', icon: 'store', },
   { slug: '/tags', title: 'Категории', icon: 'store', },
   { slug: '/top', title: 'Рейтинг', icon: 'top', },
-  { slug: '/add', title: 'Добавить', icon: 'add', },
+  { slug: '/submit', title: 'Добавить', icon: 'add', },
   { slug: '/map', title: 'Карта', icon: 'map', },
 ];

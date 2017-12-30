@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Company = mongoose.model('Company');
+const promisify = require('es6-promisify');
+const nodemailer = require('nodemailer');
 
 // upload photos package
 const multer = require('multer');
@@ -33,7 +35,7 @@ exports.getCompanies = async (req, res) => {
 
 // Зашли в Раздел Добавить Компанию
 exports.addCompany = (req, res) => {
-  res.render('editCompany', {title: 'Добавить Компанию'});
+  res.render('editCompany', {title: 'Админ Добавить Компанию'});
 };
 
 
@@ -126,6 +128,7 @@ exports.getCompanyBySlug = async (req, res, next) => {
   }
 };
 
+// Страница Категории
 exports.getCompaniesByTag = async (req, res) => {
   try {
     const tag = req.params.tag;
@@ -138,4 +141,63 @@ exports.getCompaniesByTag = async (req, res) => {
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
+};
+
+// ФОРМА SUBMIT по EMAIL
+// Страница Добавить Компанию
+exports.submitForm = (req, res) => {
+  res.render('contact', {title: 'Добавить Компанию', description: 'Добавьте сервис или компанию на сайт Bittrust!'});
+};
+
+// Submit New Company
+exports.submitCompany = (req, res) => {
+  const transport = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
+    }
+  });
+
+  const mailOptions = {
+        from: `Wes Bos <noreply@bittrust.ru>`,
+        to: '2011mckinsey@gmail.com',
+        subject: 'Website contact form',
+        text: 'This will be filled later',
+        html: `Name: ${req.body.name}<br>
+              Description: ${req.body.description}<br>
+              Address: ${req.body.address}<br>
+              Website: ${req.body.url}<br>
+              Phone: ${req.body.phone}<br>
+              Email: ${req.body.email}<br>
+              Tags: ${req.body.tags}
+        `,
+        attachments: []
+        // attachments: [{
+        //   // filename: req.body.photo,
+        //   // content: new Buffer(req.file.buffer)
+        // }]
+    };
+
+
+    if(req.file) {
+      const extension = req.file.mimetype.split('/')[1];
+      req.body.photo = `${uuid.v4()}.${extension}`;
+
+      mailOptions.attachments = [{
+        filename: req.body.photo,
+        content: new Buffer(req.file.buffer)
+      }]
+    };
+
+
+  const sendMail = promisify(transport.sendMail, transport);
+
+  sendMail(mailOptions).then((info) => {
+    req.flash('success', `Информация о <strong>${req.body.name}</strong> отправлена!`)
+    res.redirect(`/submit`);
+  }).catch((err) => {
+    res.render('error', {message:'Something went wrong'});
+  })
 };

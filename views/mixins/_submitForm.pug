@@ -1,0 +1,28 @@
+mixin submitForm()
+  form(action="/submit" method="POST" class="card" name="contactus" id="contactus" enctype="multipart/form-data")
+    label(for="name") Название *
+    input(type="text" name="name" required)
+    label(for="description") Описание *
+    textarea(name="description" required)
+    //- my code 2 lines below - URL
+    label(for="url") Адрес Сайта *
+    input(type="url" name="url" placeholder="http://www.site.ru" required)
+    //- photo test
+    label(for="photo") Photo (Мин. Ширина - 800px)
+    input(type="file" name="photo" id="photo" accept="image/jpg, image/jpeg, image/png")
+    label(for="address") Улица и Номер Дома
+    input(type="text" name="address" placeholder="Улица Ленина, 5")
+    //- my code 2 lines below
+    label(for="phone") Телефон
+    input(type="tel" name="phone" placeholder="7-495-555-0022")
+    //- my code 2 lines below
+    label(for="email") Email *
+    input(type="email" name="email" placeholder="name@example.com" required)
+    - const choices = ['Арбатская', 'Фрунзенская', 'Чеховская'];
+    label Катагория *
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice value=choice name="tags")
+          label(for=choice) #{choice}
+    input(type="submit" value="Отправить" class="button")

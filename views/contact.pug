@@ -1,0 +1,9 @@
+extends layout
+
+include mixins/_submitForm
+
+block content
+  .inner
+    h2 #{title}
+    p= description
+    +submitForm()

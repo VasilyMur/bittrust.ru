@@ -34,7 +34,11 @@ router.get('/tags', companyController.getCompaniesByTag);
 router.get('/tags/:tag', companyController.getCompaniesByTag);
 
 
-
+// Страница Добавить: Submit a Company
+router.get('/submit', companyController.submitForm);
+router.post('/submit',
+                companyController.upload,
+                companyController.submitCompany);
 
 
 
