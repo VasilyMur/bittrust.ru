@@ -25,10 +25,13 @@ router.post('/add/:id',
           companyController.updateCompany
           );
 
+// Страница Компании
+router.get('/companies/:slug', companyController.getCompanyBySlug);
 
 
-
-
+// Страница Категории
+router.get('/tags', companyController.getCompaniesByTag);
+router.get('/tags/:tag', companyController.getCompaniesByTag);
 
 
 

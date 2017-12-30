@@ -3,19 +3,17 @@ extends layout
 block content
   .single
     .single__hero
-      img.single__image(src=`/uploads/${school.photo || 'school.png'}`)
+      img.single__image(src=`/uploads/${company.photo || 'company.jpg'}`)
       h2.title.title--single
-        a(href=`/schools/${school.slug}`) #{title}
+        a(href=`/companies/${company.slug}`) #{title}
   .single__details.inner
-    img.single__map(src=h.staticMap(school.location.coordinates))
-    p.single__location= school.location.address
-    p= school.description
+    img.single__map(src=h.staticMap(company.location.coordinates))
+    p.single__location= company.location.address
+    p= company.description
 
-    if school.tags
+    if company.tags
       ul.tags
-        each tag in school.tags
+        each tag in company.tags
           li.tag
             a.tag__link(href=`/tags/${tag}`)
               span.tag__text= tag
-            
-  

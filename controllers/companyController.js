@@ -18,7 +18,7 @@ const multerOptions = {
             next({ message: 'Недопустимый формат' }, false);
         }
     }
-}
+};
 
 
 // Главная Страница - Все Компании
@@ -47,7 +47,7 @@ exports.resize = async (req, res, next) => {
     if( !req.file ) {
         next(); //skip to the next middleware
         return;
-    }
+    };
 
     const extension = req.file.mimetype.split('/')[1];
     req.body.photo = `${uuid.v4()}.${extension}`;
@@ -60,7 +60,7 @@ exports.resize = async (req, res, next) => {
     next();
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
-  }
+  };
 };
 
 // POST: Заполнили данные в разделе ADD и Нажали Submit - чтобы добавить Компанию
@@ -108,5 +108,34 @@ exports.updateCompany = async (req, res) => {
       } else {
         res.render('error', {message:'Something went wrong'});
       }
+  }
+};
+
+// Страница Компании
+exports.getCompanyBySlug = async (req, res, next) => {
+  try {
+    const company = await Company.findOne({ slug: req.params.slug });
+    // render 404 if no matching company found (not to display "someth went wrong")
+    if (!company) {
+      next();
+      return;
+    }
+    res.render('company', { title: company.name, company });
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
+exports.getCompaniesByTag = async (req, res) => {
+  try {
+    const tag = req.params.tag;
+    const tagQuery = tag || { $exists: true };
+    const tagsPromise = Company.getTagsList();
+    const companiesPromise = Company.find({ tags: tagQuery });
+    const [tags, companies] = await Promise.all([tagsPromise, companiesPromise]);
+
+    res.render('tag', {title: 'Категории', tags, tag, companies});
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
   }
 };
