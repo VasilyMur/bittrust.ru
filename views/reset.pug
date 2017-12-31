@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .inner
+    form.form(method="POST")
+      h2 #{title}
+      label(for="password") Пароль
+      input(type="password", name="password")
+      label(for="password-confirm") Повторный ввод пароля
+      input(type="password", name="password-confirm")
+      input(type="submit" value="Ввести")
+      

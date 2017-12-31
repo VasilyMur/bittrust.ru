@@ -5,11 +5,16 @@ const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const promisify = require('es6-promisify');
 // flash messages - requires sesssion and MongoStore
 const flash = require('connect-flash');
+const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+require('./handlers/passport');
+
 
 const app = express();
 
@@ -25,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
+app.use(expressValidator());
+
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());
 
@@ -37,6 +45,16 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+// promisify some callback based APIs
+app.use((req, res, next) => {
+  req.login = promisify(req.login, req);
+  next();
+});
+
+// // Passport JS is what we use to handle our logins
+app.use(passport.initialize());
+app.use(passport.session());
+
 // // The flash middleware let's us use req.flash('error', 'Shit!'), which will then pass that message to the next page the user requests
 app.use(flash());
 
@@ -44,7 +62,7 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.flashes = req.flash();
-  res.locals.user = req.user || null;
+  res.locals.user = req.user || null; // req.user - provided by passport.js
   res.locals.currentPath = req.path;
   next();
 });
