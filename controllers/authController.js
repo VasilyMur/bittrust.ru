@@ -7,6 +7,7 @@ const User = mongoose.model('User');
 // crypto - part of nodejs - no need to install
 const crypto = require('crypto');
 const promisify = require('es6-promisify');
+const mail = require('../handlers/mail');
 
 
 // Using Passport Middleware - strategy name: local, and pass it our options
@@ -51,7 +52,15 @@ exports.forgot = async (req, res) => {
     await user.save();
     // 3. Send them an emial with their token
     const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
-    req.flash('success', `На ваш email была выслан ссылка для восстановления пароля ${resetURL}`);
+
+    await mail.send({
+      user: user,
+      subject: 'Восстановление пароля',
+      resetURL: resetURL,
+      filename: 'password-reset'
+    });
+
+    req.flash('success', `На ваш email была выслан ссылка для восстановления пароля.`);
     // 4. Redirect to login page
     res.redirect('/login');
   } catch(e) {
