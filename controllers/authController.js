@@ -37,6 +37,20 @@ exports.isLoggedIn = (req, res, next) => {
   res.redirect('/login');
 };
 
+// Check if Admin!
+exports.isAdmin = (req, res, next) => {
+  if(req.isAuthenticated()) {
+    if (req.user.name === process.env.admin) {
+      next() //carry on! they are logged in!
+      return;
+    }
+  };
+  req.flash('error', 'Требуются права администратора!');
+  res.redirect('/login');
+};
+
+
+
 // Forgot password - form submit
 exports.forgot = async (req, res) => {
   try {

@@ -68,6 +68,8 @@ exports.resize = async (req, res, next) => {
 // POST: Заполнили данные в разделе ADD и Нажали Submit - чтобы добавить Компанию
 exports.createCompany = async (req, res) => {
   try {
+    // *2 - setting author as referenced in Company Model -- >> populate to getCompanyBySlug
+    req.body.author = req.user._id;
     const company = await (new Company(req.body)).save();
     req.flash('success', `Компания ${company.name} сохранена! <a href="/companies/${company.slug}">Посмотреть компанию</a>`);
     res.redirect(`/companies/${company.slug}`);
@@ -82,11 +84,22 @@ exports.createCompany = async (req, res) => {
   }
 };
 
+// * 4 - check if the company author id = user id
+const confirmOwner = (company, user) => {
+  if(!company.author.equals(user._id)) {
+    throw Error('Требуются права администратора!');
+  }
+};
 
 // Зашли в раздел Edit существующей компании
+// * 5 - после того как нашли Компанию --> проверили confirmOwner
 exports.editCompany = async (req, res) => {
   try {
     const company = await Company.findOne({ _id: req.params.id });
+
+    // confirm the user owns the Company
+    confirmOwner(company, req.user);
+
     res.render('editCompany', { title: `Редактировать данные ${company.name}`, company });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
@@ -116,7 +129,9 @@ exports.updateCompany = async (req, res) => {
 // Страница Компании
 exports.getCompanyBySlug = async (req, res, next) => {
   try {
-    const company = await Company.findOne({ slug: req.params.slug });
+    // * 3 - add .populate to get all author data instead of just ObjectId(used in Company Model)
+    // ---> next Stop users that don't own a Company from Editing Companies --> Function Confirm Owner (used in editCompany)
+    const company = await Company.findOne({ slug: req.params.slug }).populate('author');
     // render 404 if no matching company found (not to display "someth went wrong")
     if (!company) {
       next();

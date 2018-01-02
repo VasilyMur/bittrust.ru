@@ -2,9 +2,10 @@ mixin companyCard(company = {})
   .company
     .company__hero
       .company__actions
-        .company__action.company__action--edit
-          a(href=`/companies/${company._id}/edit`)
-            != h.icon('pencil')
+        if user && company.author.equals(user._id)
+          .company__action.company__action--edit
+            a(href=`/companies/${company._id}/edit`)
+              != h.icon('pencil')
       img(src=`/uploads/${company.photo || 'company.jpg'}`)
       h2.title
         a(href=`/companies/${company.slug}`) #{company.name}

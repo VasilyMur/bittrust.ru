@@ -34,7 +34,13 @@ const companySchema = new mongoose.Schema({
     required: 'Введите адрес!'
     }
   },
-  photo: String
+  photo: String,
+  // *1 - set author in model - set author when creating company in -> companyController
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'Введите имя автора'
+  }
 
 });
 

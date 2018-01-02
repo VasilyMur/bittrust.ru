@@ -8,7 +8,8 @@ const router = express.Router();
 router.get('/', companyController.getCompanies);
 
 // Зашли в Раздел Добавить Компанию
-router.get('/add', authController.isLoggedIn, companyController.addCompany);
+//router.get('/add', authController.isLoggedIn, companyController.addCompany);
+router.get('/add', authController.isAdmin, companyController.addCompany);
 
 // Заполнили данные в разделе ADD и добавили Компанию
 router.post('/add',
