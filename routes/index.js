@@ -76,4 +76,12 @@ router.post('/account/reset/:token',
 );
 
 
+/*
+  API
+*/
+
+router.get('/api/search', companyController.searchCompanies);
+
+
+
 module.exports = router;

@@ -216,3 +216,24 @@ exports.submitCompany = (req, res) => {
     res.render('error', {message:'Something went wrong'});
   })
 };
+
+exports.searchCompanies = async (req, res) => {
+
+  // score - adds a temp field to the result with score
+  const companies = await Company
+  // 1- find Companies that match API query
+  .find(
+    { $text: { $search: req.query.q }},
+    { score: { $meta: 'textScore' }}
+  )
+  // 2 - Sort based on higher score
+  .sort({
+  score: { $meta: 'textScore' }
+})
+  .limit(10);
+
+
+  res.json(companies);
+
+
+};

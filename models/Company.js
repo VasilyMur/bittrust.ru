@@ -3,7 +3,6 @@ mongoose.Promise = global.Promise;
 const slugify = require('slugify');
 
 
-
 const companySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -42,6 +41,14 @@ const companySchema = new mongoose.Schema({
     required: 'Введите имя автора'
   }
 
+});
+
+// Define Indexes - Create a Compund Index.
+//'text' option allows to perform search on text inside these fields using $text operator !!
+//$text by default is case insensitive by default
+companySchema.index({
+  name: 'text',
+  description: 'text'
 });
 
 companySchema.pre('save', async function(next) {
