@@ -2,6 +2,7 @@ const express = require('express');
 const companyController = require('../controllers/companyController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const reviewController = require('../controllers/reviewController');
 const router = express.Router();
 
 // Главная Страница - Все Компании
@@ -77,6 +78,7 @@ router.post('/account/reset/:token',
 
 router.get('/map', companyController.mapPage);
 router.get('/hearts', authController.isLoggedIn, companyController.getHearts);
+router.post('/reviews/:id', authController.isLoggedIn, reviewController.addReview);
 /*
   API
 */

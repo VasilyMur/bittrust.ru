@@ -1068,4 +1068,139 @@ label {
     opacity: 0;
     left: 20px; } }
 
+.review {
+  background: white;
+  border: 1px solid #e6e6e6;
+  border-bottom: 0;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 2rem;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-left: 5px; }
+  .review:before {
+    width: 5px;
+    left: 0;
+    content: '';
+    display: block;
+    background: -webkit-gradient(linear, left top, left bottom, from(0), color-stop(0%, #48ded4), color-stop(20%, #a026bf), color-stop(60%, #e82c75), color-stop(85%, #FFC40E), color-stop(95%, #48ded4));
+    background: -o-linear-gradient(0, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%);
+    background: linear-gradient(0, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%);
+    position: absolute;
+    height: 100%;
+    background-attachment: fixed; }
+  .review__header {
+    border-bottom: 1px solid #e6e6e6;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .review__header > * {
+      border-right: 1px solid #e6e6e6;
+      padding: 0.2rem;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+      .review__header > *:last-child {
+        border-right: 0; }
+  .review__author {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    padding-left: 2rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .review__author .avatar {
+      margin-right: 2rem; }
+  .review__time {
+    font-size: 1.2rem;
+    color: #999999; }
+  .review__stars {
+    color: #FFC40E; }
+  .review__body {
+    padding: 2rem; }
+  .review p {
+    white-space: pre-wrap; }
+
+/*
+  Reviewer Form
+ */
+.reviewer {
+  position: relative;
+  -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem; }
+  .reviewer__stars {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+    .reviewer__stars input {
+      display: none; }
+      .reviewer__stars input:checked ~ label {
+        color: #FFC40E; }
+      .reviewer__stars input + label {
+        font-size: 0;
+        /* These are in the opposite DOM order
+           re-order them to be visually in normal order
+           This is fine for accessibility because our labels have for()
+         */ }
+        .reviewer__stars input + label:before {
+          content: '\2605';
+          font-size: 2rem; }
+        .reviewer__stars input + label[for="star5"] {
+          -webkit-box-ordinal-group: 6;
+              -ms-flex-order: 5;
+                  order: 5; }
+        .reviewer__stars input + label[for="star4"] {
+          -webkit-box-ordinal-group: 5;
+              -ms-flex-order: 4;
+                  order: 4; }
+        .reviewer__stars input + label[for="star3"] {
+          -webkit-box-ordinal-group: 4;
+              -ms-flex-order: 3;
+                  order: 3; }
+        .reviewer__stars input + label[for="star2"] {
+          -webkit-box-ordinal-group: 3;
+              -ms-flex-order: 2;
+                  order: 2; }
+        .reviewer__stars input + label[for="star1"] {
+          -webkit-box-ordinal-group: 2;
+              -ms-flex-order: 1;
+                  order: 1; }
+        .reviewer__stars input + label:hover, .reviewer__stars input + label:hover ~ label {
+          color: #ffdd74; }
+  .reviewer textarea {
+    border: 0;
+    outline: 0;
+    font-size: 2rem;
+    padding: 2rem;
+    height: 200px; }
+  .reviewer__meta {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border-top: 1px solid #e6e6e6; }
+    .reviewer__meta > * {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1; }
+
 /*# sourceMappingURL=style.css.map*/
