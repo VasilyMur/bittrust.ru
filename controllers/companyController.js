@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Company = mongoose.model('Company');
+const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const nodemailer = require('nodemailer');
 
@@ -217,23 +218,93 @@ exports.submitCompany = (req, res) => {
   })
 };
 
+// API interface to search within Name and Description Text fields
 exports.searchCompanies = async (req, res) => {
-
-  // score - adds a temp field to the result with score
-  const companies = await Company
-  // 1- find Companies that match API query
-  .find(
-    { $text: { $search: req.query.q }},
-    { score: { $meta: 'textScore' }}
-  )
-  // 2 - Sort based on higher score
-  .sort({
-  score: { $meta: 'textScore' }
-})
-  .limit(10);
-
+  try {
+    // score - adds a temp field to the result with score
+    const companies = await Company
+    // 1- find Companies that match API query
+    .find(
+      { $text: { $search: req.query.q }},
+      { score: { $meta: 'textScore' }}
+    )
+    // 2 - Sort based on higher score
+    .sort({
+    score: { $meta: 'textScore' }
+  })
+    .limit(10);
 
   res.json(companies);
-
-
+  } catch (e) {
+    res.render('error', {message:'Something went wrong'});
+  }
 };
+
+// API interface to search for nearby Companies on GOOGLE Maps
+exports.mapCompanies = async (req, res) => {
+  try {
+    const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
+
+    const q = {
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: coordinates
+          },
+          $maxDistance: 10000 //10000 meters = 10km
+        }
+      }
+    };
+
+    // Use SELECT() to specify what JSON fields we need!! Can use - minus!
+    // The LIMIT() to 10 points on the Map
+    const companies = await Company.find(q).select('slug name description location photo').limit(10);
+    res.json(companies);
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
+// Map Page
+exports.mapPage = (req, res) => {
+  res.render('map', { title: 'Карта' });
+};
+
+// POST - Add or Remove Company Heart from User Heart Array
+exports.heartCompany = async (req, res) => {
+  try {
+    const hearts = req.user.hearts.map(obj => {
+      // Convert each Object in Array to String!!
+      return obj.toString();
+    });
+
+    // If Array includes Company ID then Pull it otherwise addToSet (adds only once opposed to push)
+    const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
+    const user = await User
+      .findByIdAndUpdate(req.user._id,
+                { [operator]: { hearts: req.params.id }},
+                { new: true }
+              );
+    res.json(user)
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
+//Hearts Page
+exports.getHearts = async (req, res) => {
+  try {
+    // Option 1 - Query User and Populate hearts
+    //const user = await User.find({ _id: req.user._id }).populate('hearts');
+
+    // Oprion 2 : Query Companies and find Comp IDs that are in Users Hearts Array!
+    // array on user ---> req.user.hearts [IDs of companies]
+    const companies = await Company.find({
+      _id: { $in: req.user.hearts}
+    });
+    res.render('companies', { title: 'Все Лайки', companies });
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+}

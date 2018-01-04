@@ -43,13 +43,16 @@ const companySchema = new mongoose.Schema({
 
 });
 
-// Define Indexes - Create a Compund Index.
+// Define Indexes - Create a Compund Index. Search Website using 2 fields!
 //'text' option allows to perform search on text inside these fields using $text operator !!
 //$text by default is case insensitive by default
 companySchema.index({
   name: 'text',
   description: 'text'
 });
+
+// add location field to DB index - to perform searches in Google Maps
+companySchema.index({ location: '2dsphere' });
 
 companySchema.pre('save', async function(next) {
   if (!this.isModified('name')) {

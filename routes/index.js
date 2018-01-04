@@ -75,13 +75,16 @@ router.post('/account/reset/:token',
   authController.update
 );
 
-
+router.get('/map', companyController.mapPage);
+router.get('/hearts', authController.isLoggedIn, companyController.getHearts);
 /*
   API
 */
 
 router.get('/api/search', companyController.searchCompanies);
+router.get('/api/companies/near', companyController.mapCompanies);
 
+router.post('/api/companies/:id/heart', companyController.heartCompany);
 
 
 module.exports = router;

@@ -22,7 +22,12 @@ const userSchema = new Schema({
     trim: true
   },
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+  hearts: [
+    // Hearts is an array of IDs related to different Companies
+    // This is ARRAY of Objects (not IDs)
+    { type: mongoose.Schema.ObjectId, ref: 'Company'}
+  ]
 });
 
 //Use mongoose virtual field to generate a temp. field to the model and show gravatar

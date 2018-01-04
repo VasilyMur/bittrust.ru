@@ -2,6 +2,13 @@ mixin companyCard(company = {})
   .company
     .company__hero
       .company__actions
+        if user
+          .company__action.company__action--heart
+            form.heart(method="POST" action=`/api/companies/${company._id}/heart`)
+              - const heartStrings = user.hearts.map(obj => obj.toString())
+              - const heartClass = heartStrings.includes(company._id.toString()) ? 'heart__button--hearted' : ''
+              button.heart__button(type="submit" name="heart" class=heartClass)
+                != h.icon('like')
         if user && company.author.equals(user._id)
           .company__action.company__action--edit
             a(href=`/companies/${company._id}/edit`)
