@@ -1,9 +1,12 @@
 extends layout
 
 include mixins/_companyCard
+include mixins/_pagination
+
 block content
   .inner
     h2 #{title}
     .companies
       each company in companies 
         +companyCard(company)
+    +pagination(page, pages, count)

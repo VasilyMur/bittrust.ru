@@ -27,8 +27,32 @@ const multerOptions = {
 // Главная Страница - Все Компании
 exports.getCompanies = async (req, res) => {
   try {
-    const companies = await Company.find();
-    res.render('companies', {title: 'Все Компании', companies});
+    const page = req.params.page || 1;
+    const limit = 4;
+    const skip = (page * limit) - limit;
+
+
+    // Query the DB for a list of all Companies
+    const companiesPromise = Company
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ created: 'desc' });
+
+    // Promise returns number of companies in DB
+    const countPromise = Company.count();
+
+    //Awit All Promises
+    const [companies, count] = await Promise.all([companiesPromise, countPromise]);
+
+    const pages = Math.ceil(count / limit);
+    if (!companies.length && skip) {
+      req.flash('info', `Вы запросили несуществующую страницу ${page}. Перенаправляем на страницу ${pages}.`);
+      res.redirect(`/companies/page/${pages}`);
+      return;
+    }
+
+    res.render('companies', {title: 'Все Компании', companies, page, pages, count });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }

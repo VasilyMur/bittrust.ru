@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Главная Страница - Все Компании
 router.get('/', companyController.getCompanies);
+router.get('/companies/page/:page', companyController.getCompanies);
 
 // Зашли в Раздел Добавить Компанию
 //router.get('/add', authController.isLoggedIn, companyController.addCompany);
