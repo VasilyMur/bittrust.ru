@@ -1,6 +1,7 @@
 extends layout
 
 include mixins/_reviewForm
+include mixins/_review
 
 block content
   .single
@@ -20,5 +21,11 @@ block content
             a.tag__link(href=`/tags/${tag}`)
               span.tag__text= tag
 
-    if user 
+    if user
       +reviewForm(company)
+    
+    if company.reviews 
+      .reviews 
+        each review in company.reviews 
+          .review 
+            +review(review)

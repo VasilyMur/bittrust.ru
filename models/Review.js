@@ -27,5 +27,14 @@ const reviewSchema = new mongoose.Schema({
   }
 });
 
+function autopopulate(next) {
+  this.populate('author');
+  next();
+};
+
+// Each time review is queried - autopopulate author. Virtual review field in Company
+reviewSchema.pre('find', autopopulate);
+reviewSchema.pre('findOne', autopopulate);
+
 
 module.exports = mongoose.model('Review', reviewSchema);

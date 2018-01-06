@@ -1203,4 +1203,16 @@ label {
           -ms-flex: 1;
               flex: 1; }
 
+.table {
+  width: 100%; }
+  .table td {
+    padding: 5px; }
+  .table tr:nth-child(even) {
+    background: white; }
+  .table tr:nth-child(odd):not(:first-child) {
+    background: #f7f7f7; }
+  .table thead tr {
+    background: #303030;
+    color: white; }
+
 /*# sourceMappingURL=style.css.map*/

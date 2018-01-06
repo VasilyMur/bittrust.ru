@@ -132,7 +132,7 @@ exports.getCompanyBySlug = async (req, res, next) => {
   try {
     // * 3 - add .populate to get all author data instead of just ObjectId(used in Company Model)
     // ---> next Stop users that don't own a Company from Editing Companies --> Function Confirm Owner (used in editCompany)
-    const company = await Company.findOne({ slug: req.params.slug }).populate('author');
+    const company = await Company.findOne({ slug: req.params.slug }).populate('author reviews');
     // render 404 if no matching company found (not to display "someth went wrong")
     if (!company) {
       next();
@@ -308,3 +308,9 @@ exports.getHearts = async (req, res) => {
     res.render('error', {message:'Something went wrong'});
   }
 }
+
+// TOP page
+exports.getTopCompanies = async (req, res) => {
+  const companies = await Company.getTopCompanies();
+  res.render('topCompanies', { title: 'Рейтинг Компаний', companies });
+};

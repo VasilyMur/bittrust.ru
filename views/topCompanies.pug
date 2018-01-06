@@ -1,0 +1,21 @@
+extends layout
+
+block content 
+  .inner
+    h2 Топ #{companies.length} Компаний
+    table.table 
+      thead 
+       td Фото 
+       td Место
+       td Название
+       td Кол-во Обзоров 
+       td Средняя Оценка
+      each company, i in companies
+        tr 
+          td 
+            a(href=`/companies/${company.slug}`)  
+              img(width=200 src=`/uploads/${company.photo || 'company.jpg'}` alt=company.name)
+          td #{i + 1}
+          td: a(href=`/companies/${company.slug}`)= company.name
+          td= company.reviews.length
+          td #{Math.round(company.averageRating * 10) / 10} / 5
