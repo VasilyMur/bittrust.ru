@@ -2,12 +2,12 @@ import axios from 'axios';
 
 // Map Options
 const mapOptions = {
-  center: {lat: 43.2, lng: -79.8},
+  center: {lat: 55.7, lng: 37.6},
   zoom: 12
 }
 
 // Load Companies
-function loadPlaces(map, lat = 43.2, lng = -79.8) {
+function loadPlaces(map, lat = 55.7, lng = 37.6) {
   axios.get(`/api/companies/near?lat=${lat}&lng=${lng}`).then(res => {
     const places = res.data;
     if (!places.length) {

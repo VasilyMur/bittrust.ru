@@ -2925,13 +2925,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Map Options
 var mapOptions = {
-  center: { lat: 43.2, lng: -79.8 },
+  center: { lat: 55.7, lng: 37.6 },
   zoom: 12
 
   // Load Companies
 };function loadPlaces(map) {
-  var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 43.2;
-  var lng = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -79.8;
+  var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 55.7;
+  var lng = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 37.6;
 
   _axios2.default.get('/api/companies/near?lat=' + lat + '&lng=' + lng).then(function (res) {
     var places = res.data;
