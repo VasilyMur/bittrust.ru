@@ -1,10 +1,16 @@
 doctype html
 html
   head
-    title= `${title} | ${h.siteName}`
-    link(rel='stylesheet', href='/dist/style.css')
-    link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+    block meta
+      meta(charset="UTF-8")
+      title= `${title} | ${h.siteName}`
+      meta(name="description" content="Продажа и ремонт оборудования для майнинга. Управление оборудованием в дата центрах. Рейтинг компаний и сервисов.")
+      link(rel="canonical" href="https://bittrust.ru")
+      link(rel='stylesheet', href='/dist/style.css')
+      link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+      meta(name="viewport" content="width=device-width, initial-scale=1")
+      meta(name="yandex-verification" content="9cebacb6649dc5f5")
+      meta(name="google-site-verification" content="3rMWiItb3IVtwL2aFI0EGILp5Oz94p22a6WcjcoQa8A")
   body
     block header
       header.top
@@ -35,7 +41,7 @@ html
             else
               li.nav__item: a.nav__link(href="/register", class=(currentPath.startsWith('/register') ? 'nav__link--active' : '')) Регистрация
               li.nav__item: a.nav__link(href="/login", class=(currentPath.startsWith('/login') ? 'nav__link--active' : '')) Войти
-    
+
     block messages
       if locals.flashes
         .inner
@@ -45,16 +51,18 @@ html
               each message in flashes[category]
                 .flash(class=`flash--${category}`)
                   p.flash__text!= message
-                  button.flash__remove(onClick="this.parentElement.remove()") &times;    
-    
+                  button.flash__remove(onClick="this.parentElement.remove()") &times;
+
     .content
       block content
         p This is the default
 
-    footer
+    footer.footer
       block footer
-        p (c) Web Tech Online
-
+        p <a href="https://bittrust.ru/about" class="footer__link">О нас</a>  | © 2017 Все права защищены <a href="https://bittrust.ru" class="footer__link--logo">Bittrust.ru</a>
+    
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
       script(src="/dist/App.bundle.js")
+      script.
+        (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter47289489 = new Ya.Metrika({ id:47289489, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks")

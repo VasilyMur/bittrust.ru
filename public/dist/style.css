@@ -441,8 +441,26 @@ template {
   display: none; }
 
 @font-face {
-  font-family: 'panama';
-  src: url("/fonts/panama-bold-webfont.woff2") format("woff2"), url("/fonts/panama-bold-webfont.woff") format("woff");
+  font-family: 'robotolight';
+  src: url("/fonts/roboto-light-webfont.woff2") format("woff2"), url("/fonts/roboto-light-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'robotomedium';
+  src: url("/fonts/roboto-medium-webfont.woff2") format("woff2"), url("/fonts/roboto-medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'robotomedium_italic';
+  src: url("/fonts/roboto-mediumitalic-webfont.woff2") format("woff2"), url("/fonts/roboto-mediumitalic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'robotoregular';
+  src: url("/fonts/roboto-regular-webfont.woff2") format("woff2"), url("/fonts/roboto-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
 
@@ -450,21 +468,22 @@ html {
   font-size: 10px; }
 
 body {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-family: 'robotoregular', sans-serif;
+  font-weight: 400;
   color: #303030; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-size: 5rem;
-  font-family: 'Panama';
+  font-size: 4rem;
+  font-family: 'robotoregular', sans-serif;
   font-weight: 600;
-  letter-spacing: -1px; }
+  letter-spacing: -1px;
+  margin: 0.5rem 0 2rem; }
 
 a {
   text-decoration: none;
-  color: #303030; }
-
-p a {
-  border-bottom: 2px solid #FFC40E; }
+  color: #303030;
+  border-bottom: 2px solid #ecd018; }
 
 p {
   line-height: 2;
@@ -529,6 +548,7 @@ p {
     display: -ms-flexbox;
     display: flex; }
   .nav__link {
+    font-family: 'robotolight', sans-serif;
     background: #303030;
     color: white;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -636,8 +656,8 @@ p {
   border: 0;
   background: #FFC40E;
   color: #303030;
-  font-family: 'Panama';
-  font-weight: 600; }
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700; }
 
 .avatar {
   min-width: 50px;
@@ -697,6 +717,9 @@ label {
   padding: 10px 0;
   display: block; }
 
+select {
+  margin-bottom: 10px; }
+
 .form {
   background: white;
   padding: 2rem;
@@ -748,6 +771,7 @@ label {
       .tag__choice input:checked + label {
         background: #FFC40E; }
   .tag__link {
+    border-bottom: 0;
     background: #FFC40E;
     color: #303030;
     display: -webkit-box;
@@ -819,6 +843,9 @@ label {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1; }
+    .flash__text a {
+      text-decoration: none;
+      border-bottom: 2px solid #ecd018; }
   .flash__remove {
     background: none;
     border: 0; }
@@ -930,6 +957,17 @@ label {
     left: 0;
     -o-object-fit: cover;
        object-fit: cover; }
+
+.single__slogan {
+  text-align: center;
+  margin-bottom: 20px; }
+
+.single__contacts {
+  line-height: 1.4;
+  margin: 16px 0;
+  font-size: 1.5rem; }
+  .single__contacts--tel {
+    border-bottom: none; }
 
 .single__hero {
   height: 500px;
@@ -1249,5 +1287,49 @@ label {
             flex: 3 0 auto;
     padding: 1rem;
     text-align: center; }
+
+.footer {
+  font-family: 'robotolight', sans-serif;
+  background: #303030;
+  padding: 20px;
+  text-align: center;
+  color: white; }
+  .footer__link {
+    text-decoration: none;
+    color: white; }
+    .footer__link--logo {
+      border-bottom: 0;
+      color: white; }
+
+.front-header {
+  background: #fff;
+  padding: 2rem 2rem 2rem;
+  margin: 2rem 0; }
+  .front-header__container {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center; }
+    .front-header__container h1 {
+      font-size: 3rem;
+      font-weight: 400; }
+  .front-header p {
+    margin-top: 0;
+    line-height: 1.15; }
+
+.our-team {
+  max-width: 50rem;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 5rem; }
+  .our-team--member {
+    width: 240px;
+    text-align: center; }
+    .our-team--member p {
+      margin: 1rem; }
 
 /*# sourceMappingURL=style.css.map*/

@@ -1,0 +1,15 @@
+.footer {
+  font-family: 'robotolight', sans-serif;
+  background: $black;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  &__link {
+    text-decoration: none;
+    color: white;
+    &--logo {
+      border-bottom: 0;
+      color: white;
+    }
+  }
+}

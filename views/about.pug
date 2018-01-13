@@ -1,0 +1,36 @@
+extends layout
+
+block meta
+    meta(charset="UTF-8")
+    title= `${title} | ${h.siteName}`
+    meta(name="description" content="Информация о команде и целях сайта Bittrust.ru.")
+    link(rel="canonical" href=`https://bittrust.ru/about`)
+    link(rel='stylesheet', href='/dist/style.css')
+    link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+block content
+    .inner
+        .front-header
+            h1 #{title}
+        .front-header
+            h2 Цели
+            p Все <strong>большее</strong> количество людей вовлекается в растущую экосистему криптовалют, которая сегодня насчитывает более <strong>200</strong> видов. 
+                |   Некоторые исследования прогнозируют <strong>увеличение</strong> числа пользователей Bitcoin к 2019 году до более 4-х миллионов человек. 
+            p Постоянно появляются <strong>новые</strong> компании, которые строят свой бизнес вокруг продажи и обслуживания оборудования для майнинга.
+                |   Появился новый класс компаний, которые предоставляют возможность размещать оборудование пользователей в своих дата центрах.
+            p В то же время, становится все <strong>сложнее</strong> выбрать компанию, которой вы готовы <strong>доверить</strong> свои деньги или оборудование!
+                |   Цель сайта Bittrust.ru <strong>систематизировать</strong> этот растущий рынок и выделить компании, которые пользуются <strong>доверием</strong> пользователей.  
+            p Рейтинг Bittrust.ru основывается на оценках и отзывах <strong>пользователей</strong>.  Регистрация на сайте занимает <strong>меньше</strong> минуты! 
+                |   Давайте сделаем этот рынок более прозрачным и дружелюбным!
+            p С уважением,<br><br>
+                | Команда <strong>Bittrust</strong><br>
+                | Ленинский пр-кт, 30А<br>
+                | Москва, 119334
+        .front-header
+            h2 Команда
+            .our-team
+                .our-team--member
+                    img(src=`/images/photos/face.jpg` width="200" height="200")
+                    p Василий
+                    p Web Developer
+                    a(href="mailto:vmouravi@yandex.ru") vmouravi@yandex.ru

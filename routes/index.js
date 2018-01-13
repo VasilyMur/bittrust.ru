@@ -38,7 +38,6 @@ router.get('/companies/:slug', companyController.getCompanyBySlug);
 router.get('/tags', companyController.getCompaniesByTag);
 router.get('/tags/:tag', companyController.getCompaniesByTag);
 
-
 // Страница Добавить: Submit a Company
 router.get('/submit', companyController.submitForm);
 router.post('/submit',
@@ -81,6 +80,7 @@ router.get('/map', companyController.mapPage);
 router.get('/hearts', authController.isLoggedIn, companyController.getHearts);
 router.post('/reviews/:id', authController.isLoggedIn, reviewController.addReview);
 router.get('/top', companyController.getTopCompanies);
+router.get('/about', companyController.about);
 
 /*
   API

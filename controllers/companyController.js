@@ -3,6 +3,7 @@ const Company = mongoose.model('Company');
 const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const nodemailer = require('nodemailer');
+const slugify = require('slugify');
 
 // upload photos package
 const multer = require('multer');
@@ -28,9 +29,8 @@ const multerOptions = {
 exports.getCompanies = async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const limit = 4;
+    const limit = 6;
     const skip = (page * limit) - limit;
-
 
     // Query the DB for a list of all Companies
     const companiesPromise = Company
@@ -60,7 +60,7 @@ exports.getCompanies = async (req, res) => {
 
 // Зашли в Раздел Добавить Компанию
 exports.addCompany = (req, res) => {
-  res.render('editCompany', {title: 'Админ Добавить Компанию'});
+  res.render('editCompany', {title: 'Админ Добавить Компанию', metaDescription: 'Добавить компанию на сайт bittrust.ru'});
 };
 
 
@@ -90,6 +90,8 @@ exports.resize = async (req, res, next) => {
   };
 };
 
+
+
 // POST: Заполнили данные в разделе ADD и Нажали Submit - чтобы добавить Компанию
 exports.createCompany = async (req, res) => {
   try {
@@ -98,6 +100,7 @@ exports.createCompany = async (req, res) => {
     const company = await (new Company(req.body)).save();
     req.flash('success', `Компания ${company.name} сохранена! <a href="/companies/${company.slug}">Посмотреть компанию</a>`);
     res.redirect(`/companies/${company.slug}`);
+
   } catch(err) {
       if (err.name == 'ValidationError') {
         const errorKeys = Object.keys(err.errors);
@@ -107,6 +110,7 @@ exports.createCompany = async (req, res) => {
         res.render('error', {message:'Something went wrong'});
       }
   }
+
 };
 
 // * 4 - check if the company author id = user id
@@ -121,11 +125,10 @@ const confirmOwner = (company, user) => {
 exports.editCompany = async (req, res) => {
   try {
     const company = await Company.findOne({ _id: req.params.id });
-
     // confirm the user owns the Company
     confirmOwner(company, req.user);
 
-    res.render('editCompany', { title: `Редактировать данные ${company.name}`, company });
+    res.render('editCompany', { title: `Редактировать данные ${company.name}`, company});
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
@@ -136,7 +139,7 @@ exports.updateCompany = async (req, res) => {
   try {
     //Set the location data to be a point (dissapears after school update)
     req.body.location.type = 'Point';
-
+  
     const company = await Company.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
     req.flash('success', `Информация о компании <strong>${company.name}</strong> обнавлена! <a href="/companies/${company.slug}">Посмотреть компанию</a>`);
     res.redirect(`/companies/${company._id}/edit`);
@@ -157,27 +160,62 @@ exports.getCompanyBySlug = async (req, res, next) => {
     // * 3 - add .populate to get all author data instead of just ObjectId(used in Company Model)
     // ---> next Stop users that don't own a Company from Editing Companies --> Function Confirm Owner (used in editCompany)
     const company = await Company.findOne({ slug: req.params.slug }).populate('author reviews');
+
     // render 404 if no matching company found (not to display "someth went wrong")
     if (!company) {
       next();
       return;
     }
-    res.render('company', { title: company.name, company });
+
+    const canonical = req.params.slug;
+
+    res.render('company', { title: company.name, company, canonical });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
 };
 
-// Страница Категории
+// Страница Категории !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 exports.getCompaniesByTag = async (req, res) => {
-  try {
-    const tag = req.params.tag;
-    const tagQuery = tag || { $exists: true };
-    const tagsPromise = Company.getTagsList();
-    const companiesPromise = Company.find({ tags: tagQuery });
-    const [tags, companies] = await Promise.all([tagsPromise, companiesPromise]);
 
-    res.render('tag', {title: 'Категории', tags, tag, companies});
+  try {
+
+    const tagOriginal = req.params.tag;
+    let tag;
+    let metaDescription;
+    let description;
+    if (tagOriginal === 'remont-asikov') {
+      tag = 'Ремонт Асиков';
+      metaDescription = 'Ремонт асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
+      description = 'Все компании, которые производят ремонт асиков и другого оборудования для майнинга - адреса на карте, отзывы и рейтинг.';
+     } else if (tagOriginal === 'prodazha-oborudovaniya-dlya-majninga') {
+      tag = 'Продажа Оборудования для Майнинга';
+      metaDescription = 'Продажа асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
+      description = 'Все компании, которые продают асики и другое оборудование для майнинга - адреса на карте, отзывы и рейтинг.';
+    } else if (tagOriginal === 'majning-otel') {
+      tag = 'Майнинг Отель';
+      metaDescription = 'Майнинг отели и дата центры для размещения оборудования. Все компании на карте с адресами, отзывами и рейтингами.';
+      description = 'Все компании где можно разместить оборудование для майнинга в дата центрах - на карте с отзывами и рейтингом!';
+    };
+
+    const tags = await Company.getTagsList();
+
+    const tagsEng = tags.map(tag => {
+      return {
+        _id: tag._id,
+        count: tag.count,
+        slg: slugify(tag._id).toLowerCase()
+      }
+    });
+
+    const tagQuery = tag || { $exists: true };
+    
+    const companies = await Company
+                                .find({ tags: tagQuery })
+                                .sort({ created: 'desc' });
+                
+    //res.render('tag', {title: 'Категории', metaDescription: 'Список всех компаний', companies, tag, tags});
+    res.render('tag', {title: 'Категории', companies, tagsEng, tagOriginal, metaDescription, description, tag});
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
@@ -186,7 +224,7 @@ exports.getCompaniesByTag = async (req, res) => {
 // ФОРМА SUBMIT по EMAIL
 // Страница Добавить Компанию
 exports.submitForm = (req, res) => {
-  res.render('contact', {title: 'Добавить Компанию', description: 'Добавьте сервис или компанию на сайт Bittrust!'});
+  res.render('contact', {title: 'Добавить Компанию'});
 };
 
 // Submit New Company
@@ -201,7 +239,7 @@ exports.submitCompany = (req, res) => {
   });
 
   const mailOptions = {
-        from: `Wes Bos <noreply@bittrust.ru>`,
+        from: `Bittrust Contact Form <noreply@bittrust.ru>`,
         to: '2011mckinsey@gmail.com',
         subject: 'Website contact form',
         text: 'This will be filled later',
@@ -214,10 +252,7 @@ exports.submitCompany = (req, res) => {
               Tags: ${req.body.tags}
         `,
         attachments: []
-        // attachments: [{
-        //   // filename: req.body.photo,
-        //   // content: new Buffer(req.file.buffer)
-        // }]
+
     };
 
 
@@ -337,4 +372,9 @@ exports.getHearts = async (req, res) => {
 exports.getTopCompanies = async (req, res) => {
   const companies = await Company.getTopCompanies();
   res.render('topCompanies', { title: 'Рейтинг Компаний', companies });
+};
+
+// About Page
+exports.about = (req, res) => {
+  res.render('about', { title: 'О Целях и Команде Bittrust.ru' });
 };

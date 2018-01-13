@@ -1,10 +1,36 @@
 @font-face {
-    font-family: 'panama';
-    src: url('/fonts/panama-bold-webfont.woff2') format('woff2'),
-         url('/fonts/panama-bold-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'robotolight';
+  src: url('/fonts/roboto-light-webfont.woff2') format('woff2'),
+       url('/fonts/roboto-light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 
+}
+
+@font-face {
+  font-family: 'robotomedium';
+  src: url('/fonts/roboto-medium-webfont.woff2') format('woff2'),
+       url('/fonts/roboto-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'robotomedium_italic';
+  src: url('/fonts/roboto-mediumitalic-webfont.woff2') format('woff2'),
+       url('/fonts/roboto-mediumitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'robotoregular';
+  src: url('/fonts/roboto-regular-webfont.woff2') format('woff2'),
+       url('/fonts/roboto-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html {
@@ -12,24 +38,24 @@ html {
 }
 
 body {
-  font-size:1.5rem;
+  font-size: 1.6rem;
+  font-family: 'robotoregular', sans-serif;
+  font-weight: 400;
   color:$black;
 }
 
 h1, h2, h3, h4, h5, h6, {
-  font-size: 5rem;
-  font-family: 'Panama';
+  font-size: 4rem;
+  font-family: 'robotoregular', sans-serif;
   font-weight: 600;
   letter-spacing:-1px;
+  margin: 0.5rem 0 2rem;
 }
 
 a {
   text-decoration: none;
   color:$black;
-}
-
-p a {
-  border-bottom: 2px solid $yellow;
+  border-bottom: 2px solid #ecd018;
 }
 
 p {

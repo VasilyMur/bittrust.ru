@@ -1,4 +1,16 @@
 .single {
+  &__slogan {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  &__contacts {
+    line-height: 1.4;
+    margin: 16px 0;
+    font-size: 1.5rem;
+      &--tel {
+        border-bottom: none;
+      }
+  }
   &__hero {
     height: 500px;
     position: relative;

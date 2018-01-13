@@ -1,19 +1,29 @@
 extends layout
 
-block content 
+block meta
+  meta(charset="UTF-8")
+  title= `${title} | ${h.siteName}`
+  meta(name="description" content="Рейтинг компаний, которые продают, обслуживают и управляют вашим оборудованием для майнинга.")
+  link(rel="canonical" href=`https://bittrust.ru/top`)
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+block content
   .inner
-    h2 Топ #{companies.length} Компаний
-    table.table 
-      thead 
-       td Фото 
+    .front-header
+      h1 Топ #{companies.length} Компаний
+      p Рейтинг компаний формируется на базе <strong>оценок</strong> наших пользователей. Чтобы оценить компанию и оставить отзыв требуется очень <strong>простая</strong> <a href="https://bittrust.ru/register">регистрация</a>!
+    table.table
+      thead
+       td Фото
        td Место
        td Название
-       td Кол-во Обзоров 
+       td Кол-во Отзывов
        td Средняя Оценка
       each company, i in companies
-        tr 
-          td 
-            a(href=`/companies/${company.slug}`)  
+        tr
+          td
+            a(href=`/companies/${company.slug}`)
               img(width=200 src=`/uploads/${company.photo || 'company.jpg'}` alt=company.name)
           td #{i + 1}
           td: a(href=`/companies/${company.slug}`)= company.name

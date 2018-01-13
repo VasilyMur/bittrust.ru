@@ -7,9 +7,12 @@ const promisify = require('es6-promisify');
 
 const transport = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
+  //host: 'smtp.mailgun.org',
+  //port: process.env.MAIL_PORT,
   auth: {
+    // user: process.env.MAIL_USER,
     user: process.env.MAIL_USER,
+    // pass: process.env.MAIL_PASS
     pass: process.env.MAIL_PASS
   }
 });
@@ -26,7 +29,7 @@ exports.send = async (options) => {
    const html = generateHTML(options.filename, options);
    const text = htmlToText.fromString(html);
    const mailOptions = {
-       from: `Wes Bos <noreply@bittrust.ru>`,
+       from: `Команда Bittrust <noreply@bittrust.ru>`,
        to: options.user.email,
        subject: options.subject,
        html: html,

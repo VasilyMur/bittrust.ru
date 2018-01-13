@@ -40,7 +40,7 @@ exports.isLoggedIn = (req, res, next) => {
 // Check if Admin!
 exports.isAdmin = (req, res, next) => {
   if(req.isAuthenticated()) {
-    if (req.user.name === process.env.admin) {
+    if (req.user.email === process.env.ADMIN) {
       next() //carry on! they are logged in!
       return;
     }
@@ -48,8 +48,6 @@ exports.isAdmin = (req, res, next) => {
   req.flash('error', 'Требуются права администратора!');
   res.redirect('/login');
 };
-
-
 
 // Forgot password - form submit
 exports.forgot = async (req, res) => {

@@ -3,6 +3,16 @@ extends layout
 include mixins/_reviewForm
 include mixins/_review
 
+block meta
+  meta(charset="UTF-8")
+  title= `Компания ${title} | ${h.siteName}`
+  meta(name="description" content=`Компания ${title} на рынке оборудования для майнинга. ${company.location.address}.`)
+  - const dynamicSlug = tagOriginal ? `/${tagOriginal}` : ''
+  link(rel="canonical" href=`https://bittrust.ru/companies/${canonical}`)
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+
 block content
   .single
     .single__hero
@@ -13,19 +23,29 @@ block content
     img.single__map(src=h.staticMap(company.location.coordinates))
     p.single__location= company.location.address
     p= company.description
-
+    .single__contacts
+      | Тел.: 
+      a.single__contacts--tel(href=`tel:${company.tel}`)  #{company.tel}
+      br
+      | Сайт:
+      a.single__contacts--site(href=`${company.url}` rel="nofollow")  #{company.url}
+    
     if company.tags
       ul.tags
         each tag in company.tags
           li.tag
-            a.tag__link(href=`/tags/${tag}`)
+            a.tag__link(href=`/tags/${h.slugify(tag).toLowerCase()}`)
               span.tag__text= tag
 
+    .single__slogan 
+      a(href="http://bittrust.ru/register") Зарегистрируйся 
+      |, оставь свой отзыв и поставь оценку! Помоги хорошим людям!
+    
     if user
       +reviewForm(company)
-    
-    if company.reviews 
-      .reviews 
-        each review in company.reviews 
-          .review 
+
+    if company.reviews
+      .reviews
+        each review in company.reviews
+          .review
             +review(review)

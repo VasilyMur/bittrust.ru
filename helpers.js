@@ -2,6 +2,8 @@
   This is a file of data and helper functions that we can expose and use in our templating function
 */
 
+exports.slugify = require('slugify');
+
 // FS is a built in module to node that let's us read files from the system we're running on
 const fs = require('fs');
 

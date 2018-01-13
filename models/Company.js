@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slugify = require('slugify');
+const validators = require('mongoose-validators');
 
 
 const companySchema = new mongoose.Schema({
@@ -13,6 +14,21 @@ const companySchema = new mongoose.Schema({
   description: {
     type: String,
     trim: true
+  },
+  url: {
+    type: String,
+    trim: true
+  },
+  tel: {
+    type: String,
+    trim: true,
+    validate: {
+      validator: function(v) {
+        return /\d{1}-\d{3}-\d{3}-\d{4}/.test(v);
+      },
+      message: '{VALUE} Неверный Формат!'
+    },
+    required: [true, 'Введите номер телефона']
   },
   tags: [String],
   created: {

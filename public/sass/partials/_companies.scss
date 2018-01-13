@@ -1,0 +1,19 @@
+.front-header {
+  background: #fff;
+  padding: 2rem 2rem 2rem;
+  margin: 2rem 0;
+    &__container {
+      width: 60%;
+      margin: 0 auto;
+      text-align: center;
+      h1 {
+        font-size: 3rem;
+        font-weight: 400;
+      }
+    }
+
+  p {
+    margin-top: 0;
+    line-height: 1.15;
+  }
+}

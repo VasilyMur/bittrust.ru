@@ -4,6 +4,10 @@ mixin companyForm(company = {})
     input(type="text" name="name" value=company.name)
     label(for="description") Описание
     textarea(name="description")= company.description
+    label(for="url") Адрес Сайта
+    input(type="url" name="url" value=company.url placeholder="http://sitename.ru")
+    label(for="tel") Телефон
+    input(type="tel" name="tel" value=company.tel placeholder="7-495-555-5555")
     //- Image Upload
     label(for="photo") Photo
       input(type="file" name="photo" id="photo" accept="image/jpg, image/jpeg, image/png")
@@ -16,7 +20,7 @@ mixin companyForm(company = {})
     input(type="text" id="lng" name="location[coordinates][0]" value=(company.location && company.location.coordinates[0]) required)
     label(for="lat") Широта
     input(type="text" id="lat" name="location[coordinates][1]" value=(company.location && company.location.coordinates[1]) required)
-    - const choices = ['Арбатская', 'Фрунзенская', 'Чеховская'];
+    - const choices = ['Продажа Оборудования для Майнинга', 'Ремонт Асиков', 'Майнинг Отель'];
     - const tags = company.tags || []
     ul.tags
       each choice in choices

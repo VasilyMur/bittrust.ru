@@ -5,8 +5,15 @@ include mixins/_pagination
 
 block content
   .inner
-    h2 #{title}
+    .front-header
+      .front-header__container
+        h1 
+          strong Рейтинг 
+          | Компаний, которые 
+          strong Продают, 
+          strong Обслуживают 
+          |и Управляют Оборудованием для Майнинга.
     .companies
-      each company in companies 
+      each company in companies
         +companyCard(company)
     +pagination(page, pages, count)

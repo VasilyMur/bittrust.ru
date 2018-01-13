@@ -1,8 +1,16 @@
 extends layout
 
+block meta
+  meta(charset="UTF-8")
+  title= `Все компании на карте с адресами - оборудование для майнинга, ремонт асиков, майнинг отели | ${h.siteName}`
+  meta(name="description" content="Карта компаний, которые продают, обслуживают и управляют оборудованием для майнинга криптовалют в дата центрах.")
+  link(rel="canonical" href=`https://bittrust.ru/map`)
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
 block content
   .inner
-    h2 #{title}
+    h1 #{title}
     .map
       .autocomplete
         input.autocomplete__input(type="text" placeholder="Поиск..." name="geolocate")

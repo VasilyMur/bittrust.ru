@@ -1,9 +1,17 @@
 extends layout
 
 include mixins/_submitForm
-
+block meta
+  meta(charset="UTF-8")
+  title= `${title} | ${h.siteName}`
+  meta(name="description" content="Добавьте сервис или компанию на сайт Bittrust.ru!")
+  link(rel="canonical" href=`https://bittrust.ru/submit`)
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
 block content
   .inner
-    h2 #{title}
-    p= description
+    .front-header
+      h1 #{title}
+      p Добавьте компанию на сайт Bittrust.ru!
     +submitForm()

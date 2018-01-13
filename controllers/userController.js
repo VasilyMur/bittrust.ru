@@ -50,7 +50,12 @@ exports.register = async (req, res, next) => {
     next();
 
   } catch(e) {
-    res.render('error', {message:'Something went wrong'});
+    if (e.name == 'UserExistsError') {
+      req.flash('error', 'Пользователь с таким email адресом уже зарегистрирован!');
+      res.redirect('back');
+    } else {
+      res.render('error', {message:'Something went wrong'});
+    }
   };
 };
 
