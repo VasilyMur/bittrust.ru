@@ -1,13 +1,13 @@
 extends layout
 
 include mixins/_companyCard
+include mixins/_paginationTags
 
 block meta
   meta(charset="UTF-8")
-  title= `${tag || title} | ${h.siteName}`
-  meta(name="description" content=`${metaDescription ? metaDescription : 'Все компании и категории'}`)
-  - const dynamicSlug = tagOriginal ? `/${tagOriginal}` : ''
-  link(rel="canonical" href=`https://bittrust.ru/tags${dynamicSlug}`)
+  title= `${tag} | ${h.siteName}`
+  meta(name="description" content=`${metaDescription}`)
+  link(rel="canonical" href=`https://bittrust.ru/tags/${tagOriginal}`)
   link(rel='stylesheet', href='/dist/style.css')
   link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
   meta(name="viewport" content="width=device-width, initial-scale=1")
@@ -15,7 +15,7 @@ block meta
 block content
   .inner
     .front-header
-      h1 #{tag || 'Категории'}
+      h1 #{tag}
       if description
         p #{description}
     ul.tags
@@ -28,3 +28,4 @@ block content
     .companies
       each company in companies
         +companyCard(company)
+    +paginationTags(page, pages, tagCount, tagOriginal)

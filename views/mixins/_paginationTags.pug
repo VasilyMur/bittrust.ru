@@ -1,0 +1,10 @@
+mixin paginationTags(page, pages, tagCount, tagOriginal)
+  .pagination
+    .pagination__prev
+      if page > 1
+        a(href=`/tags/${tagOriginal}/page/${page - 1}`) Назад
+    .pagination__text
+      p Страница #{page} из #{pages} - Всего #{tagCount} компаний
+    .pagination__next
+      if page < pages
+        a(href=`/tags/${tagOriginal}/page/${parseFloat(page) + 1}`) Вперед

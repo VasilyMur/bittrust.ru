@@ -4,7 +4,7 @@ html
     block meta
       meta(charset="UTF-8")
       title= `${title} | ${h.siteName}`
-      meta(name="description" content="Продажа и ремонт оборудования для майнинга. Управление оборудованием в дата центрах. Рейтинг компаний и сервисов.")
+      meta(name="description" content="Рейтинг Bittrust.ru - все компании на карте с обзорами. Продажа и ремонт оборудования для майнинга, управление оборудованием в дата центрах.")
       link(rel="canonical" href="https://bittrust.ru")
       link(rel='stylesheet', href='/dist/style.css')
       link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
@@ -59,7 +59,7 @@ html
 
     footer.footer
       block footer
-        p <a href="https://bittrust.ru/about" class="footer__link">О нас</a>  | © 2017 Все права защищены <a href="https://bittrust.ru" class="footer__link--logo">Bittrust.ru</a>
+        p © 2017 Все права защищены <a href="https://bittrust.ru" class="footer__link--logo">Bittrust.ru</a>
     
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)

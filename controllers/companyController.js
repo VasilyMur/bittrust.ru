@@ -52,11 +52,87 @@ exports.getCompanies = async (req, res) => {
       return;
     }
 
-    res.render('companies', {title: 'Все Компании', companies, page, pages, count });
+    // New Part: Get TAGS
+    const tags = await Company.getTagsList();
+    const tagsEng = tags.map(tag => {
+      return {
+        _id: tag._id,
+        count: tag.count,
+        slg: slugify(tag._id).toLowerCase()
+      }
+    });
+
+    res.render('companies', {title: 'Все Компании', companies, page, pages, count, tagsEng });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
 };
+
+exports.getCompaniesTagOnly = async (req, res) => {
+  try {
+    // PAGINATION
+    const page = req.params.page || 1;
+    const limit = 6;
+    const skip = (page * limit) - limit;
+
+    const tagOriginal = req.params.tag;
+    let tag;
+    if (tagOriginal === 'remont-asikov') {
+      tag = 'Ремонт Асиков';
+      metaDescription = 'Ремонт асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
+      description = 'Все компании, которые производят ремонт асиков и другого оборудования для майнинга - адреса на карте, отзывы и рейтинг.';
+     } else if (tagOriginal === 'prodazha-oborudovaniya-dlya-majninga') {
+      tag = 'Продажа Оборудования для Майнинга';
+      metaDescription = 'Продажа асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
+      description = 'Все компании, которые продают асики и другое оборудование для майнинга - адреса на карте, отзывы и рейтинг.';
+    } else if (tagOriginal === 'majning-otel') {
+      tag = 'Майнинг Отель';
+      metaDescription = 'Майнинг отели и дата центры для размещения оборудования. Все компании на карте с адресами, отзывами и рейтингами.';
+      description = 'Все компании где можно разместить оборудование для майнинга в дата центрах - на карте с отзывами и рейтингом!';
+    };
+  
+  
+    // Companies Promise
+    const companiesPromise = Company
+              .find({ tags: tag })
+              .skip(skip)
+              .limit(limit)
+              .sort({ created: 'desc' });
+
+    // Get Tags
+    const tagsPromise = Company.getTagsList();
+
+    const [companies, tags] = await Promise.all([companiesPromise, tagsPromise]);
+
+    const tagsEng = tags.map(tag => {
+      return {
+        _id: tag._id,
+        count: tag.count,
+        slg: slugify(tag._id).toLowerCase()
+      }
+    });
+
+
+    const findTagsCount = tagsEng.filter(tag => {
+      return tagOriginal === tag.slg ? tag : undefined;
+    }).map(tag => tag.count);
+    
+    const [tagCount] = findTagsCount;
+
+    const pages = Math.ceil(tagCount / limit);
+    if (!companies.length && skip) {
+      req.flash('info', `Страница ${page} не существует. Возвращаемся на страницу ${pages}`);
+      res.redirect(`/tags/${tagOriginal}/page/${pages}`);
+      return;
+    };
+  
+
+      res.render('tagPage', {title: 'Категория', tags: tags, tag: tag, companies: companies, tagsEng, page, pages, tagCount, tagOriginal});
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
 
 // Зашли в Раздел Добавить Компанию
 exports.addCompany = (req, res) => {
@@ -139,7 +215,7 @@ exports.updateCompany = async (req, res) => {
   try {
     //Set the location data to be a point (dissapears after school update)
     req.body.location.type = 'Point';
-  
+
     const company = await Company.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
     req.flash('success', `Информация о компании <strong>${company.name}</strong> обнавлена! <a href="/companies/${company.slug}">Посмотреть компанию</a>`);
     res.redirect(`/companies/${company._id}/edit`);
@@ -170,52 +246,6 @@ exports.getCompanyBySlug = async (req, res, next) => {
     const canonical = req.params.slug;
 
     res.render('company', { title: company.name, company, canonical });
-  } catch(e) {
-    res.render('error', {message:'Something went wrong'});
-  }
-};
-
-// Страница Категории !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-exports.getCompaniesByTag = async (req, res) => {
-
-  try {
-
-    const tagOriginal = req.params.tag;
-    let tag;
-    let metaDescription;
-    let description;
-    if (tagOriginal === 'remont-asikov') {
-      tag = 'Ремонт Асиков';
-      metaDescription = 'Ремонт асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
-      description = 'Все компании, которые производят ремонт асиков и другого оборудования для майнинга - адреса на карте, отзывы и рейтинг.';
-     } else if (tagOriginal === 'prodazha-oborudovaniya-dlya-majninga') {
-      tag = 'Продажа Оборудования для Майнинга';
-      metaDescription = 'Продажа асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
-      description = 'Все компании, которые продают асики и другое оборудование для майнинга - адреса на карте, отзывы и рейтинг.';
-    } else if (tagOriginal === 'majning-otel') {
-      tag = 'Майнинг Отель';
-      metaDescription = 'Майнинг отели и дата центры для размещения оборудования. Все компании на карте с адресами, отзывами и рейтингами.';
-      description = 'Все компании где можно разместить оборудование для майнинга в дата центрах - на карте с отзывами и рейтингом!';
-    };
-
-    const tags = await Company.getTagsList();
-
-    const tagsEng = tags.map(tag => {
-      return {
-        _id: tag._id,
-        count: tag.count,
-        slg: slugify(tag._id).toLowerCase()
-      }
-    });
-
-    const tagQuery = tag || { $exists: true };
-    
-    const companies = await Company
-                                .find({ tags: tagQuery })
-                                .sort({ created: 'desc' });
-                
-    //res.render('tag', {title: 'Категории', metaDescription: 'Список всех компаний', companies, tag, tags});
-    res.render('tag', {title: 'Категории', companies, tagsEng, tagOriginal, metaDescription, description, tag});
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
@@ -311,14 +341,14 @@ exports.mapCompanies = async (req, res) => {
             type: 'Point',
             coordinates: coordinates
           },
-          $maxDistance: 10000 //10000 meters = 10km
+          $maxDistance: 20000 //10000 meters = 10km
         }
       }
     };
 
     // Use SELECT() to specify what JSON fields we need!! Can use - minus!
     // The LIMIT() to 10 points on the Map
-    const companies = await Company.find(q).select('slug name description location photo').limit(10);
+    const companies = await Company.find(q).select('slug name description location photo').limit(100);
     res.json(companies);
   } catch(e) {
     res.render('error', {message:'Something went wrong'});

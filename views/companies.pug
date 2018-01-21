@@ -8,11 +8,18 @@ block content
     .front-header
       .front-header__container
         h1 
-          strong Рейтинг 
-          | Компаний, которые 
+          | Рейтинг
+          strong  Bittrust.ru - 
+          | Все Компании, которые 
           strong Продают, 
           strong Обслуживают 
           |и Управляют Оборудованием для Майнинга.
+    ul.tags
+      each t in tagsEng
+        li.tag
+          a.tag__link(href=`/tags/${(t.slg)}` class=(t._id === tag ? "tag__link--active" : ''))
+            span.tag__text= t._id
+            span.tag__count= t.count
     .companies
       each company in companies
         +companyCard(company)

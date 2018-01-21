@@ -33,10 +33,10 @@ router.post('/add/:id',
 // Страница Компании
 router.get('/companies/:slug', companyController.getCompanyBySlug);
 
+// КАТЕГОРИИ ОТДЕЛЬНЫЕ СТРАНИЦЫ
+router.get('/tags/:tag', companyController.getCompaniesTagOnly);
+router.get('/tags/:tag/page/:page', companyController.getCompaniesTagOnly);
 
-// Страница Категории
-router.get('/tags', companyController.getCompaniesByTag);
-router.get('/tags/:tag', companyController.getCompaniesByTag);
 
 // Страница Добавить: Submit a Company
 router.get('/submit', companyController.submitForm);
