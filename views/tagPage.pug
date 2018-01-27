@@ -5,7 +5,7 @@ include mixins/_paginationTags
 
 block meta
   meta(charset="UTF-8")
-  title= `${tag} | ${h.siteName}`
+  title= `${metaTitle} | ${h.siteName}`
   meta(name="description" content=`${metaDescription}`)
   link(rel="canonical" href=`https://bittrust.ru/tags/${tagOriginal}`)
   link(rel='stylesheet', href='/dist/style.css')
@@ -28,4 +28,4 @@ block content
     .companies
       each company in companies
         +companyCard(company)
-    +paginationTags(page, pages, tagCount, tagOriginal)
+    +paginationTags(page, pages, tagOriginal)

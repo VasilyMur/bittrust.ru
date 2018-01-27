@@ -62,7 +62,7 @@ exports.getCompanies = async (req, res) => {
       }
     });
 
-    res.render('companies', {title: 'Все Компании', companies, page, pages, count, tagsEng });
+    res.render('companies', {title: 'Удобный выбор компаний, которые продают и ремонтируют оборудование для майнинга.', companies, page, pages, count, tagsEng });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
@@ -77,21 +77,24 @@ exports.getCompaniesTagOnly = async (req, res) => {
 
     const tagOriginal = req.params.tag;
     let tag;
+    let metaTitle;
     if (tagOriginal === 'remont-asikov') {
       tag = 'Ремонт Асиков';
-      metaDescription = 'Ремонт асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
+      metaTitle = 'Ремонт Асиков - Обзоры и Рейтинг Компаний';
+      metaDescription = 'Где сделать ремонт оборудования для майнинга, починить asic antminer s9 или отремонтировать майнинг ферму. Компании на карте, адреса, отзывы и рейтинг.';
       description = 'Все компании, которые производят ремонт асиков и другого оборудования для майнинга - адреса на карте, отзывы и рейтинг.';
      } else if (tagOriginal === 'prodazha-oborudovaniya-dlya-majninga') {
       tag = 'Продажа Оборудования для Майнинга';
-      metaDescription = 'Продажа асиков и другого оборудования для майнинга. Все компании на карте с адресами, отзывами и рейтингами.';
+      metaTitle = 'Продажа Оборудования для Майнинга - Все Компании';
+      metaDescription = 'Где купить оборудование для майнинга, майнинг ферму, асик bitmain antminer s9 или l3. Все компании на карте с адресами, отзывами и рейтингами.';
       description = 'Все компании, которые продают асики и другое оборудование для майнинга - адреса на карте, отзывы и рейтинг.';
     } else if (tagOriginal === 'majning-otel') {
       tag = 'Майнинг Отель';
-      metaDescription = 'Майнинг отели и дата центры для размещения оборудования. Все компании на карте с адресами, отзывами и рейтингами.';
+      metaTitle = 'Майнинг Отель для Ваших Асиков - Список Компаний';
+      metaDescription = 'Обзор майнинг дата центров и майнинг отелей для вашего оборудования. Рейтинг компаний, оценки пользователей, расположение на карте.';
       description = 'Все компании где можно разместить оборудование для майнинга в дата центрах - на карте с отзывами и рейтингом!';
     };
-  
-  
+
     // Companies Promise
     const companiesPromise = Company
               .find({ tags: tag })
@@ -127,7 +130,7 @@ exports.getCompaniesTagOnly = async (req, res) => {
     };
   
 
-      res.render('tagPage', {title: 'Категория', tags: tags, tag: tag, companies: companies, tagsEng, page, pages, tagCount, tagOriginal});
+      res.render('tagPage', {title: 'Категория', metaTitle, metaDescription, description, tags: tags, tag: tag, companies: companies, tagsEng, page, pages, tagCount, tagOriginal});
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
@@ -138,8 +141,6 @@ exports.getCompaniesTagOnly = async (req, res) => {
 exports.addCompany = (req, res) => {
   res.render('editCompany', {title: 'Админ Добавить Компанию', metaDescription: 'Добавить компанию на сайт bittrust.ru'});
 };
-
-
 
 // stores image file into memory (doesn't save)
 exports.upload = multer(multerOptions).single('photo');

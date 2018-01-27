@@ -1,10 +1,10 @@
-mixin pagination(page, pages, count)
+mixin pagination(page, pages)
   .pagination
     .pagination__prev
       if page > 1
         a(href=`/companies/page/${page - 1}`) Назад
     .pagination__text
-      p Страница #{page} из #{pages} - Всего #{count} компаний
+      p Страница #{page} из #{pages}
     .pagination__next
       if page < pages
         a(href=`/companies/page/${parseFloat(page) + 1}`) Вперед

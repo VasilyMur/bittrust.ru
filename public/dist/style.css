@@ -17,9 +17,6 @@ body {
 .inner {
   max-width: 900px;
   margin: 0 auto; }
-  @media all and (max-width: 900px) {
-    .inner {
-      padding: 2rem; } }
 
 html {
   -webkit-box-sizing: border-box;
@@ -647,6 +644,10 @@ p {
   .heart-count:before {
     content: '\2665\FE0F';
     margin-right: 1rem; } }
+
+@media all and (max-width: 430px) {
+  .nav__section--pages li:nth-last-child(2) {
+    display: none; } }
 
 .hide {
   text-indent: -999999px;
@@ -1322,7 +1323,7 @@ select {
   padding: 2rem 2rem 2rem;
   margin: 2rem 0; }
   .front-header__container {
-    width: 60%;
+    width: 70%;
     margin: 0 auto;
     text-align: center; }
     .front-header__container h1 {
@@ -1331,5 +1332,13 @@ select {
   .front-header p {
     margin-top: 0;
     line-height: 1.15; }
+
+@media all and (max-width: 520px) {
+  .front-header__container h1 {
+    font-size: 2.1rem; } }
+
+@media all and (max-width: 640px) {
+  .front-header__container {
+    width: 100%; } }
 
 /*# sourceMappingURL=style.css.map*/

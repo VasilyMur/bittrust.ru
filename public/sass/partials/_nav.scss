@@ -126,3 +126,13 @@
     margin-right: 1rem;
   }
 }
+
+@media all and (max-width: 430px) {
+  .nav {
+    &__section--pages {
+      li:nth-last-child(2) {
+        display: none;
+      }
+    }
+  }
+}

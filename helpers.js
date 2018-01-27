@@ -22,8 +22,8 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 exports.siteName = `Bittrust.ru`;
 
 exports.menu = [
-  { slug: '/about', title: 'О нас', icon: 'store', },
   { slug: '/top', title: 'Рейтинг', icon: 'top', },
-  { slug: '/submit', title: 'Добавить', icon: 'add', },
   { slug: '/map', title: 'Карта', icon: 'map', },
+  { slug: '/submit', title: 'Добавить', icon: 'add', },
+  { slug: '/about', title: 'О нас', icon: 'store', },
 ];
