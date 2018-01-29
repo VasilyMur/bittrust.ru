@@ -2,14 +2,50 @@
   font-family: 'robotolight', sans-serif;
   background: $black;
   padding: 20px;
-  text-align: center;
   color: white;
-  &__link {
-    text-decoration: none;
-    color: white;
-    &--logo {
-      border-bottom: 0;
-      color: white;
+  &__nav {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    &--link {
+      font-size: 1.5rem;
     }
   }
+  &__link--logo {
+    border-bottom: 0;
+    color: white;
+  }
+  a {
+    color: white;
+    border-bottom: 0;
+  }
+  p {
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 4rem 0 0;
+  }
+  li {
+    list-style: none;
+  }
+  h2 {
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+  }
+
 }
+
+@media all and (max-width: 550px) {
+  .footer__nav {
+    width: 100%;
+    display: block;
+  }
+  .footer__nav--container {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    margin-bottom: 1rem;
+  }
+}
+

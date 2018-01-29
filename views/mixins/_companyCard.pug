@@ -17,7 +17,9 @@ mixin companyCard(company = {})
           .company__action.company__action--count 
             != h.icon('review') 
             span= company.reviews.length
-      img(src=`/uploads/${company.photo || 'company.jpg'}`)
+      - const altTag = tag ? tag : ' '
+      - const compImg = company.photo ? `/uploads/${company.photo}` : 'https://res.cloudinary.com/dlmeqtsfq/image/upload/v1517219087/company_oaczb1.jpg'
+      img(src=`${compImg}` alt=`${altTag}`)
       h2.title
         a(href=`/companies/${company.slug}`) #{company.name}
     .company__details

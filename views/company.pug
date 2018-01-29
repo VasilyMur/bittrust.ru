@@ -16,7 +16,9 @@ block meta
 block content
   .single
     .single__hero
-      img.single__image(src=`/uploads/${company.photo || 'company.jpg'}`)
+      - const imgAlt = title ? `Компания ${title}` : ' '
+      - const compImg = company.photo ? `/uploads/${company.photo}` : 'https://res.cloudinary.com/dlmeqtsfq/image/upload/v1517219087/company_oaczb1.jpg'
+      img.single__image(src=`${compImg}` alt=`${imgAlt}`)
       h2.title.title--single
         a(href=`/companies/${company.slug}`) #{title}
   .single__details.inner

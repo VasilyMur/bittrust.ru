@@ -58,8 +58,24 @@ html
         p This is the default
 
     footer.footer
-      block footer
-        p © 2017 Все права защищены <a href="https://bittrust.ru" class="footer__link--logo">Bittrust.ru</a>
+      .footer__nav
+        .footer__nav--container
+          h2 Все Компании
+          li 
+            a.footer__nav--link(href="https://bittrust.ru/")  Главная
+          li
+            a.footer__nav--link(href="https://bittrust.ru/about")  О Нас
+          li
+          a.footer__nav--link(href="https://bittrust.ru/submit") Добавить Компанию 
+        .footer__nav--container
+          h2 Разделы
+          li 
+            a.footer__nav--link(href="https://bittrust.ru/tags/remont-asikov") Ремонт Асиков
+          li
+            a.footer__nav--link(href="https://bittrust.ru/tags/majning-otel") Майнинг Отели
+          li
+            a.footer__nav--link(href="https://bittrust.ru/tags/prodazha-oborudovaniya-dlya-majninga") Продажа Оборудования для Майнинга
+      p © 2017 Все права защищены <a href="https://bittrust.ru" class="footer__link--logo">Bittrust.ru</a>
     
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)

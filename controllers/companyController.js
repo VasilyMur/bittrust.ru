@@ -29,7 +29,7 @@ const multerOptions = {
 exports.getCompanies = async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const limit = 6;
+    const limit = 9;
     const skip = (page * limit) - limit;
 
     // Query the DB for a list of all Companies
@@ -72,7 +72,7 @@ exports.getCompaniesTagOnly = async (req, res) => {
   try {
     // PAGINATION
     const page = req.params.page || 1;
-    const limit = 6;
+    const limit = 9;
     const skip = (page * limit) - limit;
 
     const tagOriginal = req.params.tag;
