@@ -20,7 +20,15 @@ mixin companyCard(company = {})
       - const altTag = tag ? tag : ' '
       - const compImg = company.photo ? `/uploads/${company.photo}` : 'https://res.cloudinary.com/dlmeqtsfq/image/upload/v1517219087/company_oaczb1.jpg'
       img(src=`${compImg}` alt=`${altTag}`)
-      h2.title
-        a(href=`/companies/${company.slug}`) #{company.name}
     .company__details
+      h2.companyTitle
+        a(href=`/companies/${company.slug}`) #{company.name}
+      span.hash #{tag}
+      span.compAddr #{company.location.address}
+      if company.reviews
+        .reviews
+          each review in company.reviews
+            .review__stars
+              = `★`.repeat(review.rating)
+              = `☆`.repeat(5 - review.rating)
       p= company.description.split(' ').slice(0, 25).join(' ')

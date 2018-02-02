@@ -1,30 +1,40 @@
 .companies {
   display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
+  flex-direction: column;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .company {
   background:white;
   margin: 10px 0;
-  width:30%;
   box-shadow: $shad;
-  &--wide {
-    width: 100%;
+  width: 100%;
+  display: flex;
+  min-height: 200px;
+  .companyTitle {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+  .hash {
+    color: #bbbcc4;
+    font-size: 1.3rem;
+    margin: 0;
+  }
+  .compAddr {
+    display: block;
+    font-size: 1.3rem;
   }
   &__details {
     padding: 2rem;
+    flex: 2;
     p {
       line-height: 1.2;
       margin-bottom: 0;
+      font-size: 1.5rem;
     }
   }
-  @media all and (max-width: 850px) {
-    width: 48%;
-  }
-  @media all and (max-width: 550px) {
-    width: 100%;
-  }
+
 }
 
 .company__actions {
@@ -59,6 +69,7 @@
   position: relative;
   padding: 0 10px 0 10px;
   text-align: right;
+  flex: 1;
   &:before {
     display: block;
     content: '';
@@ -86,5 +97,11 @@
     left: 0;
     object-fit: cover;
     //clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+  }
+}
+
+@media all and (max-width: 740px) {
+  .company__hero  {
+    display: none;
   }
 }
