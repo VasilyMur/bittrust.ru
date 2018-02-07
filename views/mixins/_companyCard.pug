@@ -23,7 +23,8 @@ mixin companyCard(company = {})
     .company__details
       h2.companyTitle
         a(href=`/companies/${company.slug}`) #{company.name}
-      span.hash #{tag}
+      - const cat = tag ? tag : company.tags
+      span.hash #{cat}
       span.compAddr #{company.location.address}
       if company.reviews
         .reviews
