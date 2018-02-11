@@ -26,10 +26,4 @@ mixin companyCard(company = {})
       - const cat = tag ? tag : company.tags
       span.hash #{cat}
       span.compAddr #{company.location.address}
-      if company.reviews
-        .reviews
-          each review in company.reviews
-            .review__stars
-              = `★`.repeat(review.rating)
-              = `☆`.repeat(5 - review.rating)
       p= company.description.split(' ').slice(0, 25).join(' ')
