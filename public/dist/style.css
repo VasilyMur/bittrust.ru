@@ -471,7 +471,7 @@ body {
   color: #303030; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-size: 4rem;
+  font-size: 3rem;
   font-family: 'robotoregular', sans-serif;
   font-weight: 600;
   letter-spacing: -1px;
@@ -535,7 +535,9 @@ p {
   .nav__section {
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    margin: 0;
+    padding-left: 0; }
     .nav__section--search {
       -webkit-box-flex: 1;
           -ms-flex: 1 1 auto;
@@ -772,6 +774,7 @@ select {
       .tag__choice input:checked + label {
         background: #FFC40E; }
   .tag__link {
+    margin: 5px 0;
     border-bottom: 0;
     background: #FFC40E;
     color: #303030;
@@ -784,7 +787,8 @@ select {
     .tag__link--active {
       background: #827cd2; }
       .tag__link--active .tag__text {
-        color: white; }
+        color: white;
+        padding: 1rem 1rem; }
   .tag__text {
     padding: 1rem 1rem;
     display: block; }

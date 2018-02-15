@@ -33,9 +33,15 @@ router.post('/add/:id',
 // Страница Компании
 router.get('/companies/:slug', companyController.getCompanyBySlug);
 
-// КАТЕГОРИИ ОТДЕЛЬНЫЕ СТРАНИЦЫ
-router.get('/tags/:tag', companyController.getCompaniesTagOnly);
-router.get('/tags/:tag/page/:page', companyController.getCompaniesTagOnly);
+// EACH TAG PAGE ROUTE & Pagination
+router.get('/tags/prodazha-oborudovaniya-dlya-majninga', companyController.getCompaniesSale);
+router.get('/tags/prodazha-oborudovaniya-dlya-majninga/page/:page', companyController.getCompaniesSale);
+
+router.get('/tags/remont-asikov', companyController.getCompaniesRemont);
+router.get('/tags/remont-asikov/page/:page', companyController.getCompaniesRemont);
+
+router.get('/tags/majning-otel', companyController.getCompaniesHotel);
+router.get('/tags/majning-otel/page/:page', companyController.getCompaniesHotel);
 
 
 // Страница Добавить: Submit a Company
@@ -81,6 +87,7 @@ router.get('/hearts', authController.isLoggedIn, companyController.getHearts);
 router.post('/reviews/:id', authController.isLoggedIn, reviewController.addReview);
 router.get('/top', companyController.getTopCompanies);
 router.get('/about', companyController.about);
+router.get('/contacts', companyController.contacts);
 
 /*
   API

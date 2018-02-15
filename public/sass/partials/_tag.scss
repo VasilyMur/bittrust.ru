@@ -30,6 +30,7 @@
     }
   }
   &__link {
+    margin: 5px 0;
     border-bottom: 0;
     background:$yellow;
     color:$black;
@@ -40,8 +41,11 @@
       background: lighten($purple, 40%);
       .tag__text {
         color: white;
+        padding: 1rem 1rem;
       }
+
     }
+
   }
   &__text {
     padding: 1rem 1rem;

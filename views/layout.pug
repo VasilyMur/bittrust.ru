@@ -15,7 +15,7 @@ html
     block header
       header.top
         nav.nav
-          .nav__section.nav__section--pages
+          ul.nav__section.nav__section--pages
             li.nav__item
               a.nav__link.nav__link--logo(href="/")
                 != h.icon('bitcoin')
@@ -28,7 +28,7 @@ html
             .search
               input.search__input(type="text" placeholder="Ввод..." name="search")
               .search__results
-          .nav__section.nav__section--user
+          ul.nav__section.nav__section--user
             if user
               li.nav__item: a.nav__link(href="/hearts", class=(currentPath.startsWith('/hearts') ? 'nav__link--active' : ''))
                 != h.icon('like')
@@ -60,11 +60,13 @@ html
     footer.footer
       .footer__nav
         .footer__nav--container
-          h2 Все Компании
+          h2 Bittrust
           li 
             a.footer__nav--link(href="https://bittrust.ru/")  Главная
           li
             a.footer__nav--link(href="https://bittrust.ru/about")  О Нас
+          li
+            a.footer__nav--link(href="https://bittrust.ru/contacts")  Контакты
           li
           a.footer__nav--link(href="https://bittrust.ru/submit") Добавить Компанию 
         .footer__nav--container

@@ -1,0 +1,36 @@
+extends layout
+
+include mixins/_companyCard
+include mixins/_paginationPages
+
+block meta
+  meta(charset="UTF-8")
+  title= `Ремонт Асиков в Москве - Обзоры и Рейтинг Компаний | ${h.siteName}`
+  meta(name="description" content="Где сделать ремонт оборудования для майнинга, починить asic antminer s9 или отремонтировать майнинг ферму в Москве. Компании на карте, адреса, отзывы и рейтинг.")
+  link(rel="canonical" href="https://bittrust.ru/tags/remont-asikov")
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+
+block content
+  .inner
+    .front-header
+      h1 Ремонт Асиков в Москве
+      p Ремонт асиков - все компании Москвы на карте с адресами, отзывами и рейтингом. Хотите отремонтировать сломанный майнер у профессионалов – вам сюда! Оставьте свой отзыв о компании – и помогите ближнему.
+    ul.tags
+      li.tag
+        a.tag__link(href="/tags/remont-asikov" class="tag__link--active")
+          span.tag__text Ремонт Асиков
+          span.tag__count= count
+      li.tag
+        a.tag__link(href="/tags/prodazha-oborudovaniya-dlya-majninga" class="tag__link--second")
+          span.tag__text Продажа Оборудования для Майнинга
+      li.tag
+        a.tag__link(href="/tags/majning-otel" class="tag__link--last")
+          span.tag__text Майнинг Отель
+
+    .companies
+      each company in companies
+        +companyCard(company, tag)
+    +paginationPages(page, pages, tagOriginal)
+ 

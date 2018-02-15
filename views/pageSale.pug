@@ -1,0 +1,36 @@
+extends layout
+
+include mixins/_companyCard
+include mixins/_paginationPages
+
+block meta
+  meta(charset="UTF-8")
+  title= `Продажа Оборудования для Майнинга в Москве - Все Компании | ${h.siteName}`
+  meta(name="description" content="Где купить оборудование для майнинга, майнинг ферму, асик bitmain или antminer s9 в Москве. Все компании на карте с адресами, отзывами и рейтингами.")
+  link(rel="canonical" href="https://bittrust.ru/tags/prodazha-oborudovaniya-dlya-majninga")
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+
+block content
+  .inner
+    .front-header
+      h1 Продажа Оборудования для Майнинга в Москве
+      p Продажа оборудования для майнинга - все компании Москвы с адресами на карте, отзывами и рейтингом. Хотите узнать, где можно купить асик или ферму для майнинга криптовалют и не стать жертвой мошенников? Вам сюда! Наши рейтинги основаны на ваших оценках.
+    ul.tags
+      li.tag
+        a.tag__link(href="/tags/prodazha-oborudovaniya-dlya-majninga" class="tag__link--active")
+          span.tag__text Продажа Оборудования для Майнинга
+          span.tag__count= count
+      li.tag
+        a.tag__link(href="/tags/remont-asikov" class="tag__link--second")
+          span.tag__text Ремонт Асиков
+      li.tag
+        a.tag__link(href="/tags/majning-otel" class="tag__link--last")
+          span.tag__text Майнинг Отель
+
+    .companies
+      each company in companies
+        +companyCard(company, tag)
+    +paginationPages(page, pages, tagOriginal)
+ 

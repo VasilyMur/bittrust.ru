@@ -1,5 +1,14 @@
 extends layout
 
+block meta
+  meta(charset="UTF-8")
+  title= `Страница Регистрации на Сайте | ${h.siteName}`
+  meta(name="description" content="Пройдите простую регистрацию на сайте Bittrust.ru и получите доступ к закрытой части сайта.")
+  link(rel="canonical" href="https://bittrust.ru/register")
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+
 block content
   .inner
     form.form(action="/register" method="POST")

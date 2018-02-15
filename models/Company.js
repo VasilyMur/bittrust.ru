@@ -90,12 +90,23 @@ companySchema.pre('save', async function(next) {
   //TODO - make more resilien so slugs are unique
 });
 
+// Get All Tags & Count - front page
 companySchema.statics.getTagsList = function() {
   // aggregate - returns Promise - that we await inside Controller
   return this.aggregate([
     { $unwind: '$tags' },
     { $group: { _id: '$tags', count: { $sum: 1 } } },
     { $sort: { count: -1 } }
+  ]);
+};
+
+// Get All Tags & Count - individual tag pages
+companySchema.statics.getTagData = function(tag) {
+  // aggregate - returns Promise - that we await inside Controller
+  return this.aggregate([
+    { $unwind: '$tags' },
+    { $match: { tags: tag} },
+    { $group: { _id: '$tags', count: { $sum: 1 } } },
   ]);
 };
 

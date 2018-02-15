@@ -17,7 +17,7 @@ block content
     ul.tags
       each t in tagsEng
         li.tag
-          a.tag__link(href=`/tags/${(t.slg)}` class=(t._id === tag ? "tag__link--active" : ''))
+          a.tag__link(href=`/tags/${(t.slg)}`)
             span.tag__text= t._id
             span.tag__count= t.count
     .companies

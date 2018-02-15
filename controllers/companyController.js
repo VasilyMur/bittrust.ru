@@ -62,38 +62,23 @@ exports.getCompanies = async (req, res) => {
       }
     });
 
-    res.render('companies', {title: 'Удобный выбор компаний, которые продают и ремонтируют оборудование для майнинга.', companies, page, pages, count, tagsEng });
+    res.render('companies', { title: 'Удобный выбор компаний, которые продают и ремонтируют оборудование для майнинга.', companies, page, pages, count, tagsEng });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
 };
 
-exports.getCompaniesTagOnly = async (req, res) => {
+// SALE TAG PAGE
+exports.getCompaniesSale = async (req, res) => {
+
   try {
     // PAGINATION
     const page = req.params.page || 1;
     const limit = 15;
     const skip = (page * limit) - limit;
 
-    const tagOriginal = req.params.tag;
-    let tag;
-    let metaTitle;
-    if (tagOriginal === 'remont-asikov') {
-      tag = 'Ремонт Асиков';
-      metaTitle = 'Ремонт Асиков - Обзоры и Рейтинг Компаний';
-      metaDescription = 'Где сделать ремонт оборудования для майнинга, починить asic antminer s9 или отремонтировать майнинг ферму. Компании на карте, адреса, отзывы и рейтинг.';
-      description = 'Ремонт асиков - все компании Москвы на карте с адресами, отзывами и рейтингом. Хотите отремонтировать сломанный майнер у профессионалов – вам сюда! Оставьте свой отзыв о компании – и помогите ближнему.';
-     } else if (tagOriginal === 'prodazha-oborudovaniya-dlya-majninga') {
-      tag = 'Продажа Оборудования для Майнинга';
-      metaTitle = 'Продажа Оборудования для Майнинга - Все Компании';
-      metaDescription = 'Где купить оборудование для майнинга, майнинг ферму, асик bitmain antminer s9 или l3. Все компании на карте с адресами, отзывами и рейтингами.';
-      description = 'Продажа оборудования для майнинга - все компании Москвы с адресами на карте, отзывами и рейтингом. Хотите узнать, где можно купить асик или ферму для майнинга криптовалют и не стать жертвой мошенников? Вам сюда! Наши рейтинги основаны на ваших оценках.';
-    } else if (tagOriginal === 'majning-otel') {
-      tag = 'Майнинг Отель';
-      metaTitle = 'Майнинг Отель для Ваших Асиков - Список Компаний';
-      metaDescription = 'Обзор майнинг дата центров и майнинг отелей для вашего оборудования. Рейтинг компаний, оценки пользователей, расположение на карте.';
-      description = 'Майнинг отели - все компании Москвы на карте с отзывами и рейтингом! Хотите найти помещение под майнинг? Хотите вывести шумные асики из дома в профессиональный майнинг отель? Наши обзоры помогут найти надежную компанию!';
-    };
+    const tag = "Продажа Оборудования для Майнинга";
+    const tagOriginal = "prodazha-oborudovaniya-dlya-majninga";
 
     // Companies Promise
     const companiesPromise = Company
@@ -102,40 +87,106 @@ exports.getCompaniesTagOnly = async (req, res) => {
               .limit(limit)
               .sort({ created: 'desc' });
 
-    // Get Tags
-    const tagsPromise = Company.getTagsList();
+   // Tags Promise
+    const tagsPromise = Company.getTagData(tag);
 
-    const [companies, tags] = await Promise.all([companiesPromise, tagsPromise]);
+    // Await Both Promises
+    const [companies, tagCount] = await Promise.all([companiesPromise, tagsPromise]);
+    const { count } = tagCount[0];
 
-    const tagsEng = tags.map(tag => {
-      return {
-        _id: tag._id,
-        count: tag.count,
-        slg: slugify(tag._id).toLowerCase()
-      }
-    });
-
-
-    const findTagsCount = tagsEng.filter(tag => {
-      return tagOriginal === tag.slg ? tag : undefined;
-    }).map(tag => tag.count);
-    
-    const [tagCount] = findTagsCount;
-
-    const pages = Math.ceil(tagCount / limit);
+    const pages = Math.ceil(count / limit);
     if (!companies.length && skip) {
       req.flash('info', `Страница ${page} не существует. Возвращаемся на страницу ${pages}`);
-      res.redirect(`/tags/${tagOriginal}/page/${pages}`);
+      res.redirect(`/tags/prodazha-oborudovaniya-dlya-majninga/page/${pages}`);
       return;
     };
-  
 
-      res.render('tagPage', {title: 'Категория', metaTitle, metaDescription, description, tags: tags, tag: tag, companies: companies, tagsEng, page, pages, tagCount, tagOriginal});
+    res.render('pageSale', { tag, companies, count, page, pages, tagOriginal });
+
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }
 };
 
+// REMONT PAGE
+exports.getCompaniesRemont = async (req, res) => {
+
+  try {
+    // PAGINATION
+    const page = req.params.page || 1;
+    const limit = 15;
+    const skip = (page * limit) - limit;
+
+    const tag = "Ремонт Асиков";
+    const tagOriginal = "remont-asikov";
+
+    // Companies Promise
+    const companiesPromise = Company
+              .find({ tags: tag })
+              .skip(skip)
+              .limit(limit)
+              .sort({ created: 'desc' });
+
+   // Tags Promise
+    const tagsPromise = Company.getTagData(tag);
+
+    // Await Both Promises
+    const [companies, tagCount] = await Promise.all([companiesPromise, tagsPromise]);
+    const { count } = tagCount[0];
+
+    const pages = Math.ceil(count / limit);
+    if (!companies.length && skip) {
+      req.flash('info', `Страница ${page} не существует. Возвращаемся на страницу ${pages}`);
+      res.redirect(`/tags/remont-asikov/page/${pages}`);
+      return;
+    };
+
+    res.render('pageRemont', { tag, companies, count, page, pages, tagOriginal });
+
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
+
+// HOTEL PAGE
+exports.getCompaniesHotel = async (req, res) => {
+
+  try {
+    // PAGINATION
+    const page = req.params.page || 1;
+    const limit = 15;
+    const skip = (page * limit) - limit;
+
+    const tag = "Майнинг Отель";
+    const tagOriginal = "majning-otel";
+
+    // Companies Promise
+    const companiesPromise = Company
+              .find({ tags: tag })
+              .skip(skip)
+              .limit(limit)
+              .sort({ created: 'desc' });
+
+   // Tags Promise
+    const tagsPromise = Company.getTagData(tag);
+
+    // Await Both Promises
+    const [companies, tagCount] = await Promise.all([companiesPromise, tagsPromise]);
+    const { count } = tagCount[0];
+
+    const pages = Math.ceil(count / limit);
+    if (!companies.length && skip) {
+      req.flash('info', `Страница ${page} не существует. Возвращаемся на страницу ${pages}`);
+      res.redirect(`/tags/majning-otel/page/${pages}`);
+      return;
+    };
+
+    res.render('pageHotel', { tag, companies, count, page, pages, tagOriginal });
+
+  } catch(e) {
+    res.render('error', {message:'Something went wrong'});
+  }
+};
 
 // Зашли в Раздел Добавить Компанию
 exports.addCompany = (req, res) => {
@@ -408,4 +459,9 @@ exports.getTopCompanies = async (req, res) => {
 // About Page
 exports.about = (req, res) => {
   res.render('about', { title: 'О Целях и Команде Bittrust.ru' });
-};
+}; 
+
+// Contacts Page
+exports.contacts = (req, res) => {
+  res.render('contacts', { title: 'Компания Bittrust.ru - Контакты' });
+}; 

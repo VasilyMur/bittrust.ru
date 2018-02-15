@@ -1,0 +1,36 @@
+extends layout
+
+include mixins/_companyCard
+include mixins/_paginationPages
+
+block meta
+  meta(charset="UTF-8")
+  title= `Майнинг Отель для Ваших Асиков в Москве- Список Компаний | ${h.siteName}`
+  meta(name="description" content="Обзор майнинг дата центров и отелей для размещения вашего оборудования в Москве. Рейтинг компаний, оценки пользователей, расположение на карте.")
+  link(rel="canonical" href="https://bittrust.ru/tags/majning-otel")
+  link(rel='stylesheet', href='/dist/style.css')
+  link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+
+block content
+  .inner
+    .front-header
+      h1 Майнинг Отель в Москве
+      p Майнинг отели - все компании Москвы на карте с отзывами и рейтингом! Хотите найти помещение под майнинг? Хотите вывести шумные асики из дома в профессиональный майнинг отель? Наши обзоры помогут найти надежную компанию!
+    ul.tags
+      li.tag
+        a.tag__link(href="/tags/majning-otel" class="tag__link--active")
+          span.tag__text Майнинг Отели
+          span.tag__count= count
+      li.tag
+        a.tag__link(href="/tags/prodazha-oborudovaniya-dlya-majninga" class="tag__link--last")
+          span.tag__text Продажа Оборудования для Майнинга
+      li.tag
+        a.tag__link(href="/tags/remont-asikov" class="tag__link--second")
+          span.tag__text Ремонт Асиков
+
+    .companies
+      each company in companies
+        +companyCard(company, tag)
+    +paginationPages(page, pages, tagOriginal)
+ 
