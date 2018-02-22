@@ -89,6 +89,7 @@ router.get('/top', companyController.getTopCompanies);
 router.get('/about', companyController.about);
 router.get('/contacts', companyController.contacts);
 
+
 /*
   API
 */

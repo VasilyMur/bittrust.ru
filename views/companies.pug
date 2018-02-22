@@ -2,25 +2,32 @@ extends layout
 
 include mixins/_companyCard
 include mixins/_pagination
+include mixins/_miningCalculator
 
 block content
   .inner
     .front-header
       .front-header__container
         h1 
-          | Рейтинг
-          strong  Bittrust.ru - 
-          | Все Компании, которые 
-          strong Продают, 
-          strong Обслуживают 
-          |и Управляют Оборудованием для Майнинга.
+          | Рейтинг и калькулятор майнинга
+          strong  Bittrust.ru. 
+          strong  Рассчитай 
+          |  доходность Bitcoin! 
+          |  Найди 
+          strong надежного
+          |   партнера на рынке криптовалют!
     ul.tags
       each t in tagsEng
         li.tag
           a.tag__link(href=`/tags/${(t.slg)}`)
             span.tag__text= t._id
             span.tag__count= t.count
-    .companies
-      each company in companies
-        +companyCard(company)
-    +pagination(page, pages)
+    .front-header
+      <h2>Калькулятор Майнинга Криптовалют</h2>
+      +miningCalculator()
+    .front-header.disclosure
+      p <strong>Калькулятор</strong> доходности майнинга Bitcoin производит расчет на базе данных из открытых источников в реальном времени. 
+      p <strong>Прибыль</strong> в рублях рассчитывается исходя из текущего курса <strong>ЦБ РФ</strong>, который на данный момент составляет <strong class="strong-rub"> </strong> рублей за 1 доллар США. 
+      p Текущий показатель <strong>Block Reward</strong> (премия за успешное решение криптографической задачи ) составляет <strong>12.5</strong>.
+
+

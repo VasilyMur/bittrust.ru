@@ -27,3 +27,5 @@ exports.menu = [
   { slug: '/submit', title: 'Добавить', icon: 'add', },
   { slug: '/about', title: 'О нас', icon: 'store', },
 ];
+
+

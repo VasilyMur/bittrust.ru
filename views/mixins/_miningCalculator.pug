@@ -1,0 +1,99 @@
+mixin miningCalculator()
+    .calculator__container
+        .container__left
+            .container__left--image
+                img.calculator__logo(src=`/images/photos/bitcoin-logo.png` width="100" height="100")
+            .container__left--currency
+                .rates-container
+                    span.calculated__for--value.btcUsd
+                    span.calculated__for--value.btcRub
+            .container__left--form
+                form(class="calculator")
+                    .form-group
+                        label(for="hashRate") Hash Rate (GH/s):
+                        input(type="text" id="hashRate" name="hashRate" placeholder="13000" value="13500" )
+                    .form-group
+                        label(for="watts") Power (Watts):
+                        input(type="text" id="watts" name="watts" placeholder="1350"  value="1350")
+                    .form-group
+                        label(for="powerCost") Power Cost ($/kWh):
+                        input(type="text" id="powerCost" name="powerCost" placeholder="0.10" value="0.1")
+                    .form-group
+                        label(for="difficulty") Уровень Сложности:
+                        input(type="text" id="difficulty" name="difficulty" value="3007383866429.731"  )
+                    input(type="submit" value="Рассчитать" class="button")
+
+        .container__right
+            .container__right--header
+                .header__values
+                    .header__values--details
+                        .value__label.headerProfit Коэф. Дохода за 1 День
+                        .value__content.profitRatio 258%
+                    .header__values--details
+                        .value__label Доход за 1 Месяц
+                        .value__content.profitMonth $250
+                        .value__content.profitMonthRub ₽ 14100
+
+            .container__right--calculations
+                .calculations__data.firstone
+                    .calculations__data--label Доход за 1 день
+                    .calculations__data--value.profitPerDay $9.6
+                    .calculations__data--value.profitPerDayRub ₽542
+                    .calculations__data--name День
+
+                .calculations__data
+                    .calculations__data--label Добыто монет/день
+                    .calculations__data--value.minedPerDay Ƀ 0.001181
+
+                .calculations__data
+                    .calculations__data--label Ст-ть электр-ва/день
+                    .calculations__data--value.costPerDay $3.24
+                    .calculations__data--value.costPerDayRub ₽182
+
+            .container__right--calculations
+                .calculations__data.firstone
+                    .calculations__data--label Доход за Неделю
+                    .calculations__data--value.profitPerWeek $67.2
+                    .calculations__data--value.profitPerWeekRub ₽3810
+                    .calculations__data--name Неделя
+
+                .calculations__data
+                    .calculations__data--label Добыто монет/неделя
+                    .calculations__data--value.minedPerWeek Ƀ 0.008267
+
+                .calculations__data
+                    .calculations__data--label Ст-ть электр-ва/день
+                    .calculations__data--value.costPerWeek $22.68
+                    .calculations__data--value.costPerWeekRub ₽1279
+                        
+            .container__right--calculations
+                    .calculations__data.firstone
+                        .calculations__data--label Доход за Месяц
+                        .calculations__data--value.profitPerMonth $250
+                        .calculations__data--value.profitPerMonthRub ₽14100
+                        .calculations__data--name Месяц
+
+                    .calculations__data
+                        .calculations__data--label Добыто монет/месяц
+                        .calculations__data--value.minedPerMonth Ƀ 0.008267
+
+                    .calculations__data
+                        .calculations__data--label Ст-ть электр-ва/месяц
+                        .calculations__data--value.costPerMonth $97.2
+                        .calculations__data--value.costPerMonthRub ₽5460
+
+            .container__right--calculations
+                    .calculations__data.firstone
+                        .calculations__data--label Доход за Год
+                        .calculations__data--value.profitPerYear $3225.6
+                        .calculations__data--value.profitPerYearRub ₽180633
+                        .calculations__data--name Год
+
+                    .calculations__data
+                        .calculations__data--label Добыто монет/год
+                        .calculations__data--value.minedPerYear Ƀ 0.425160
+
+                    .calculations__data
+                        .calculations__data--label Ст-ть электр-ва/год
+                        .calculations__data--value.costPerYear $1166.4
+                        .calculations__data--value.costPerYearRub ₽65784

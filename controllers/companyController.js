@@ -465,3 +465,4 @@ exports.about = (req, res) => {
 exports.contacts = (req, res) => {
   res.render('contacts', { title: 'Компания Bittrust.ru - Контакты' });
 }; 
+

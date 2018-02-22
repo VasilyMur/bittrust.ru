@@ -7,7 +7,7 @@
       margin: 0 auto;
       text-align: center;
       h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
         font-weight: 400;
       }
     }
@@ -16,6 +16,15 @@
     margin-top: 0;
     line-height: 1.15;
   }
+
+}
+
+.disclosure {
+  border-left: 2px solid #FFC40E;
+}
+
+.strong-rub {
+  border-bottom: 1px solid #FFC40E;
 }
 
 @media all and (max-width: 520px) {
