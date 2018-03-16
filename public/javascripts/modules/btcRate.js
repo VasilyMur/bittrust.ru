@@ -17,7 +17,7 @@ const btcRate = (fieldUsd, fieldRub) => {
                 const btcPriceRub = object.data.rates.RUB * btcPriceUsd;
                 fieldRub.innerHTML = `BTC ₽ ${numberWithCommas(btcPriceRub.toFixed(2))}`;
 
-                document.querySelector('.strong-rub').innerHTML = object.data.rates.RUB.toFixed(2);
+                document.querySelector('.strong-rub').innerHTML = object.data.rates.RUB.toFixed(3);
 
                 return;
             })

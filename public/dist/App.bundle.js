@@ -3293,7 +3293,7 @@ var btcRate = function btcRate(fieldUsd, fieldRub) {
             var btcPriceRub = object.data.rates.RUB * btcPriceUsd;
             fieldRub.innerHTML = 'BTC \u20BD ' + numberWithCommas(btcPriceRub.toFixed(2));
 
-            document.querySelector('.strong-rub').innerHTML = object.data.rates.RUB.toFixed(2);
+            document.querySelector('.strong-rub').innerHTML = object.data.rates.RUB.toFixed(3);
 
             return;
         });

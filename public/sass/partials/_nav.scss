@@ -93,6 +93,11 @@
 
 @media all and (max-width: 650px) {
   .nav {
+    .search {
+      &__input {
+          font-size: 18px;
+      }
+    }
     &__section {
       width: 100%;
       &--user {
@@ -112,13 +117,16 @@
     }
     &__link {
       width: 100%;
+      padding: 1rem 0.5rem 0.2rem 1rem; // change 1
       svg {
         // width: 5px;
         max-width: 100%;
+        margin-bottom: 5px; // change 3
       }
       &--logo {
         svg {
           width:100%;
+          height: 40px; //change 2
         }
       }
     }
