@@ -29,5 +29,9 @@ block content
       p <strong>Калькулятор</strong> доходности майнинга Bitcoin производит расчет на базе данных из открытых источников в реальном времени. 
       p <strong>Прибыль</strong> в рублях рассчитывается исходя из текущего курса <strong>ЦБ РФ</strong>, который на данный момент составляет <strong class="strong-rub"> </strong> рублей за 1 доллар США. 
       p Текущий показатель <strong>Block Reward</strong> (премия за успешное решение криптографической задачи ) составляет <strong>12.5</strong>.
-
+    <h2 class="newcompanies"><span>Новые Компании</span></h2>
+    .companies
+      each company in companies
+        +companyCard(company)
+    +pagination(page, pages)
 

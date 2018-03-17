@@ -2,6 +2,7 @@
   &__slogan {
     text-align: center;
     margin-bottom: 20px;
+    line-height: 1.5;
   }
   &__contacts {
     line-height: 1.4;
@@ -54,12 +55,18 @@
     margin-top: -10rem;
     box-shadow: 0 0 10px 2px rgba(0,0,0,0.15);
     z-index: 2;
+    @media all and (max-width: 450px) {
+      padding: 3rem 1rem;
+    }
   }
   &__map {
     width: calc(100% + 6rem);
     max-width: none;
     margin-top: -3rem;
     margin-left: -3rem;
+    @media all and (max-width: 450px) {
+      width: calc(100% + 4rem);
+    }
   }
   &__location {
     margin: 0;

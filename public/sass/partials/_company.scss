@@ -1,20 +1,26 @@
 .companies {
   display:flex;
   flex-direction: column;
-  max-width: 90%;
+  max-width: 80%;
   margin: 0 auto;
 }
 
+.company__main__container {
+  padding: 20px;
+  background: #fff;
+  box-shadow: $shad;
+  margin: 0 0 15px;
+} 
+
 .company {
   background:white;
-  margin: 10px 0;
-  box-shadow: $shad;
   width: 100%;
   display: flex;
-  min-height: 200px;
+  min-height: 160px;
   .companyTitle {
     font-size: 2rem;
     letter-spacing: 0.5px;
+    margin-top: 0;
   }
   .hash {
     color: #bbbcc4;
@@ -26,7 +32,7 @@
     font-size: 1.3rem;
   }
   &__details {
-    padding: 2rem;
+    padding-left: 2rem;
     flex: 2;
     p {
       line-height: 1.2;
@@ -70,6 +76,8 @@
   padding: 0 10px 0 10px;
   text-align: right;
   flex: 1;
+  max-width: 160px;
+  max-height: 160px;
   &:before {
     display: block;
     content: '';
@@ -100,8 +108,30 @@
   }
 }
 
+@media all and (max-width: 850px) {
+  .companies {
+    max-width: 95%
+  }
+}
+
 @media all and (max-width: 740px) {
   .company__hero  {
     display: none;
   }
+  .company__main__container {
+    padding: 0;
+  }
+  .company {
+    padding: 20px 10px;
+  }
+  .company__details {
+    padding-left: 0;
+  }
+}
+
+@media all and (max-width: 440px) {
+  .company__details p {
+    font-size: 1.4rem;
+  }
+
 }

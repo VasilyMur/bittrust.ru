@@ -29,7 +29,7 @@ const multerOptions = {
 exports.getCompanies = async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const limit = 20;
+    const limit = 5;
     const skip = (page * limit) - limit;
 
     // Query the DB for a list of all Companies
