@@ -25,25 +25,34 @@ const multerOptions = {
 };
 
 
-// Главная Страница - Все Компании
+// Главная Страница - Все Компании -- >> Not Used -- getCompaniesSale instead
 exports.getCompanies = async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const limit = 5;
+    const limit = 10;
     const skip = (page * limit) - limit;
+
+    // Change 1
+    const tag = "Оборудование для майнинга";
+    const tagCard = "Продажа Оборудования для Майнинга";
 
     // Query the DB for a list of all Companies
     const companiesPromise = Company
-      .find()
+    // CHANGE 2- search based on tag
+      .find({ tags: tagCard })
       .skip(skip)
       .limit(limit)
       .sort({ created: 'desc' });
 
     // Promise returns number of companies in DB
-    const countPromise = Company.count();
+   // const countPromise = Company.count();
+   //Change 3
+   const tagsPromise = Company.getTagData(tagCard);
 
     //Awit All Promises
-    const [companies, count] = await Promise.all([companiesPromise, countPromise]);
+    //const [companies, count] = await Promise.all([companiesPromise, countPromise]);
+    const [companies, tagCount] = await Promise.all([companiesPromise, tagsPromise]);
+    const { count } = tagCount[0];
 
     const pages = Math.ceil(count / limit);
     if (!companies.length && skip) {
@@ -62,7 +71,7 @@ exports.getCompanies = async (req, res) => {
       }
     });
 
-    res.render('companies', { title: 'Удобный выбор компаний, которые продают и ремонтируют оборудование для майнинга.', companies, page, pages, count, tagsEng });
+    res.render('companies', { title: 'Удобный выбор компаний', companies, page, pages, count, tagsEng, tag });
   } catch(e) {
     res.render('error', {message:'Something went wrong'});
   }

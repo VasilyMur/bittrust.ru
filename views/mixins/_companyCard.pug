@@ -23,7 +23,7 @@ mixin companyCard(company = {})
         img(src=`${compImg}` alt=`${altTag}`)
       .company__details
         h2.companyTitle
-          a(href=`/companies/${company.slug}`) #{company.name}
+          a(href=`/companies/${company.slug}` title=`${company.name}`) #{company.name}
         - const cat = tag ? tag : company.tags
         span.hash #{cat}
         span.compAddr #{company.location.address}

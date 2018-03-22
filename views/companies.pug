@@ -9,21 +9,18 @@ block content
     .front-header
       .front-header__container
         h1 
-          | Рейтинг компаний и калькулятор майнинга
-          strong  Bittrust.ru. 
-          strong  Рассчитай 
-          |  доходность Bitcoin! 
-          |  Найди 
-          strong надежного
-          |   партнера на рынке криптовалют!
+          strong  Bittrust.ru
+          |  поможет купить майнер и не потерять деньги!
+          |  Делаем обзоры и сравниваем услуги компаний 
+          |  на рынке криптовалют.
     ul.tags
       each t in tagsEng
         li.tag
-          a.tag__link(href=`/tags/${(t.slg)}`)
+          a.tag__link(href=`/tags/${(t.slg)}` title=`${t._id}`)
             span.tag__text= t._id
             span.tag__count= t.count
     .front-header
-      <h2>Калькулятор Майнинга Криптовалют</h2>
+      <h2>Калькулятор Майнинга Криптовалют</h2> 
       +miningCalculator()
     .front-header.disclosure
       p <strong>Калькулятор</strong> доходности майнинга Bitcoin производит расчет на базе данных из открытых источников в реальном времени. 
@@ -32,6 +29,6 @@ block content
     <h2 class="newcompanies"><span>Новые Компании</span></h2>
     .companies
       each company in companies
-        +companyCard(company)
+        +companyCard(company, tag)
     +pagination(page, pages)
 
