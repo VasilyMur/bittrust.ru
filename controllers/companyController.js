@@ -470,7 +470,6 @@ exports.about = (req, res) => {
   res.render('about', { title: 'О Целях и Команде Bittrust.ru' });
 }; 
 
-
 // Contacts Page
 exports.contacts = (req, res) => {
   res.render('contacts', { title: 'Компания Bittrust.ru - Контакты' });

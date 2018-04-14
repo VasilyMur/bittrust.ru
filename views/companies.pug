@@ -5,29 +5,29 @@ include mixins/_pagination
 include mixins/_miningCalculator
 
 block content
-  .inner
-    .front-header
+  .inner.front-page
+    .front-header.front-slogan
       .front-header__container
-        h1 
-          strong  Bittrust.ru
-          |  поможет купить майнер и не потерять деньги!
-          |  Делаем обзоры и сравниваем услуги компаний 
-          |  на рынке криптовалют.
+        h1 Bittrust.ru поможет купить майнер и не потерять деньги! Делаем обзоры и сравниваем услуги компаний на рынке криптовалют.
     ul.tags
       each t in tagsEng
         li.tag
           a.tag__link(href=`/tags/${(t.slg)}` title=`${t._id}`)
             span.tag__text= t._id
             span.tag__count= t.count
-    .front-header
-      <h2>Калькулятор Майнинга Криптовалют</h2> 
-      +miningCalculator()
-    .front-header.disclosure
-      p <strong>Калькулятор</strong> доходности майнинга Bitcoin производит расчет на базе данных из открытых источников в реальном времени. 
-      p <strong>Прибыль</strong> в рублях рассчитывается исходя из текущего курса <strong>ЦБ РФ</strong>, который на данный момент составляет <strong class="strong-rub"> </strong> рублей за 1 доллар США. 
-      p Текущий показатель <strong>Block Reward</strong> (премия за успешное решение криптографической задачи ) составляет <strong>12.5</strong>.
-    <h2 class="newcompanies"><span>Новые Компании</span></h2>
-    .companies
+    .front-header.zero-padding-margin
+      h2.embed-calc-header Калькулятор Майнинга Криптовалют
+    .front-header.iframe-calc-front
+      iframe(src="https://www.cryptocompare.com/mining/calculator/btc?HashingPower=120&amp;HashingUnit=MH%2Fs&amp;PowerConsumption=1200&amp;CostPerkWh=0.1" scrolling="yes" allowfullscreen="allowfullscreen" width="1100" height="700" frameborder="0")
+    .front-header.zero-padding-margin
+      p.embed-calc-bottom Расчет прибыльности майнинга с учетом следующих показателей:
+      ul.calculator-list
+          li <strong>Hash Rate (Хешрейт)</strong> - Показатель <strong>мощности</strong> оборудования для майнинга. Чем быстрее оборудование считает хеши - тем <strong>быстрее</strong> зарабатываются биткойны или другая криптовалюта.
+          li <strong>Power (Потребление Электроэнергии)</strong> - количество энергии, которое потребляет ваш майнер.
+          li <strong>Power Cost (Стоимость Электроэнергии)</strong> - важно указывать тарифы, действующие в <strong>вашем</strong> городе!
+          li <strong>Уровень Сложности</strong> - показатель сложности добычи <strong>постоянно</strong> увеличивается. Наш калькулятор майнинга <strong>автоматически</strong> подтягивает действующий показатель из глобальной базы данных.
+    h2.newcompanies Оборудование для Майнинга: Новые Компании
+    .companies.front-grid
       each company in companies
         +companyCard(company, tag)
     +pagination(page, pages)

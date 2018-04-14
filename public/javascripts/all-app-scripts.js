@@ -5,8 +5,8 @@ import typeAhead from './modules/typeAhead';
 import makeMap from './modules/map';
 import ajaxHeart from './modules/heart';
 
-import calculator from './modules/calculator';
-import btcRate from './modules/btcRate';
+//import calculator from './modules/calculator';
+//import btcRate from './modules/btcRate';
 
 
 
@@ -22,9 +22,9 @@ heartForms.forEach(form => {
 })
 
 
-calculator(document.querySelector('form.calculator'));
+//calculator(document.querySelector('form.calculator'));
 
-btcRate(document.querySelector('.btcUsd'), document.querySelector('.btcRub'));
+//btcRate(document.querySelector('.btcUsd'), document.querySelector('.btcRub'));
 
 
 

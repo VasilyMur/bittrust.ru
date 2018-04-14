@@ -1,0 +1,28 @@
+extends layout
+
+include mixins/_miningCalculator
+
+block meta
+    meta(charset="UTF-8")
+    title= `Калькулятор прибыльности майнинга криптовалют | ${h.siteName}`
+    meta(name="description" content="Калькулятор доходности майнинга криптовалют онлайн.  Рассчитай прибыльность добычи и окупаемость майнинга  в 2018 году!")
+    link(rel="canonical" href=`https://bittrust.ru/mining-calculator`)
+    link(rel='stylesheet', href='/dist/style.css')
+    link(rel="shortcut icon" type="image/png" href="/images/icons/btc.png")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+block content
+    .inner
+        .front-header
+            h1 Калькулятор Майнинга
+            p Расчет прибыльности майнинга с учетом следующих показателей:
+            ul.calculator-list
+                li <strong>Hash Rate (Хешрейт)</strong> - Показатель <strong>мощности</strong> оборудования для майнинга. Чем быстрее оборудование считает хеши - тем <strong>быстрее</strong> зарабатываются биткойны или другая криптовалюта.
+                li <strong>Power (Потребление Электроэнергии)</strong> - количество энергии, которое потребляет ваш майнер.
+                li <strong>Power Cost (Стоимость Электроэнергии)</strong> - важно указывать тарифы, действующие в <strong>вашем</strong> городе!
+                li <strong>Уровень Сложности</strong> - показатель сложности добычи <strong>постоянно</strong> увеличивается. Наш калькулятор майнинга <strong>автоматически</strong> подтягивает действующий показатель из глобальной базы данных.
+        .front-header
+            +miningCalculator()
+        .front-header.disclosure
+            p <strong>Калькулятор</strong> доходности майнинга Bitcoin производит расчет на базе данных из открытых источников в реальном времени. 
+            p <strong>Прибыль</strong> в рублях рассчитывается исходя из текущего курса <strong>ЦБ РФ</strong>, который на данный момент составляет <strong class="strong-rub"> </strong> рублей за 1 доллар США. 
+            p Текущий показатель <strong>Block Reward</strong> (премия за успешное решение криптографической задачи ) составляет <strong>12.5</strong>.
