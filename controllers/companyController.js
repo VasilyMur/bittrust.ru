@@ -475,3 +475,8 @@ exports.contacts = (req, res) => {
   res.render('contacts', { title: 'Компания Bittrust.ru - Контакты' });
 }; 
 
+// Contacts Page
+exports.miningArticle = (req, res) => {
+  res.render('mining-2018.pug', { title: 'Майнинг в 2018 году: методы и перспективы' });
+}; 
+

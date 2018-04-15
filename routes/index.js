@@ -88,6 +88,7 @@ router.post('/reviews/:id', authController.isLoggedIn, reviewController.addRevie
 router.get('/top', companyController.getTopCompanies);
 router.get('/about', companyController.about);
 router.get('/contacts', companyController.contacts);
+router.get('/mining-2018', companyController.miningArticle);
 
 
 /*

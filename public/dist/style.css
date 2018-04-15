@@ -1592,6 +1592,8 @@ select {
   .footer h2 {
     font-size: 1.6rem;
     letter-spacing: 0.5px; }
+  .footer ul {
+    padding: 0; }
 
 @media all and (max-width: 550px) {
   .footer__nav {
@@ -1728,5 +1730,50 @@ select {
     font-size: 2rem; }
   .embed-calc-header {
     font-size: 2rem; } }
+
+main {
+  background-color: #fff;
+  border: 1px solid #ececec;
+  -webkit-box-shadow: 0 1px #ececec;
+          box-shadow: 0 1px #ececec;
+  padding: 40px;
+  margin: 40px 0; }
+  main h1 {
+    font-size: 4rem; }
+  main h2 {
+    width: 100%;
+    text-align: left;
+    padding: 10px 0px;
+    color: #fff;
+    background: #333;
+    border-left: 50px solid #ffc600;
+    font-weight: normal; }
+    main h2 strong {
+      margin-left: 10px;
+      font-weight: normal;
+      display: inline-block; }
+  main article .entry-meta {
+    font-size: 15px;
+    margin-bottom: 0;
+    color: #000;
+    border-bottom: solid 2px #000;
+    border-top: solid 2px #000;
+    padding: 10px 0;
+    line-height: 1;
+    font-weight: bold; }
+  main article ol li {
+    line-height: 2; }
+  main article ul li {
+    list-style: none;
+    line-height: 2; }
+  main article ul li::before {
+    content: '\25A0';
+    margin-right: 0.5rem;
+    color: #ffc600;
+    font-size: 20px; }
+
+@media all and (max-width: 600px) {
+  main {
+    padding: 10px; } }
 
 /*# sourceMappingURL=style.css.map*/
