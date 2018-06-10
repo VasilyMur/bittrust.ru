@@ -1,0 +1,9 @@
+.top {
+    &:after {
+        content: '';
+        display: block;
+        background: #F9BA00;
+        height: 10px;
+        width: 100%;
+  } 
+}

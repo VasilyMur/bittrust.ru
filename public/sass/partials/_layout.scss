@@ -8,19 +8,37 @@ body {
   &:before {
     content: '';
     display: block;
-    background: $grad;
-    height: 10px;
+    background: #F9BA00;
+    height: 2px;
     width: 100%;
   }
 }
 
-.inner {
-  max-width:900px;
+
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  max-width: 120rem;
   margin: 0 auto;
+  grid-gap: 2rem;
+  padding: 0 2rem;
+  @media all and (max-width: 1100px) {
+    display: block;
+    padding: 0;
+    sidebar {
+      display: none;
+    }
+  }
+}
+
+//.inner {
+  // max-width:900px;
+  // margin: 0 auto;
   // @media all and (max-width: 900px) {
   //   padding: 2rem;
   // }
-}
+//}
 
 .front-page {
   max-width: 1100px;

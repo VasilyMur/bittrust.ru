@@ -3,9 +3,11 @@ import dompurify from 'dompurify';
 
 function searchResultsHTML(companies) {
   return companies.map(company => {
+    const star = company.reviews.length ? '<span class="reviewStar">&#x2605;</span>' : '';
     return `
         <a href="/companies/${company.slug}" class="search__result">
-          <strong>${company.name}</strong>
+          <span><strong>${company.name}</strong></span>
+          <span>${star}Отзывы - ${company.reviews.length}</span>
         </a>
     `;
   }).join('');
@@ -23,19 +25,24 @@ function typeAhead(search) {
       searchResults.style.display = 'none';
       return; // stop!
     };
+
     //Show the search results!
     searchResults.style.display = 'block';
 
-    axios.get(`/api/search?q=${this.value}`).then(res => {
-      if(res.data.length) {
-        searchResults.innerHTML = dompurify.sanitize(searchResultsHTML(res.data));
+    const companies = axios.get(`/api/companies/near?lat=55.7&lng=37.6`).then(res => {
+      const findMatch = res.data.filter(res => {
+        const regex = new RegExp(`${this.value}`, 'gi');
+        return res.name.match(regex)
+      }).slice(0, 11);
+      if (findMatch.length > 0) {
+        searchResults.innerHTML = dompurify.sanitize(searchResultsHTML(findMatch));
         return;
       }
-      // tell them nothing came back
       searchResults.innerHTML = dompurify.sanitize(`<div class="search__result">Результатов для ${this.value} не найдено!</div>`);
     }).catch(err => {
       console.log(err);
     });
+
   });
 
   // Handle Keyboard Inputs

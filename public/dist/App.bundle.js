@@ -950,9 +950,16 @@ var _heart = __webpack_require__(33);
 
 var _heart2 = _interopRequireDefault(_heart);
 
+var _sidebarBtc = __webpack_require__(34);
+
+var _sidebarBtc2 = _interopRequireDefault(_sidebarBtc);
+
+var _calculator = __webpack_require__(35);
+
+var _calculator2 = _interopRequireDefault(_calculator);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import calculator from './modules/calculator';
 //import btcRate from './modules/btcRate';
 
 
@@ -967,7 +974,9 @@ heartForms.forEach(function (form) {
   form.addEventListener('submit', _heart2.default);
 });
 
-//calculator(document.querySelector('form.calculator'));
+(0, _sidebarBtc2.default)(document.querySelector('.sidebar'));
+
+(0, _calculator2.default)(document.querySelector('form.calculator'));
 
 //btcRate(document.querySelector('.btcUsd'), document.querySelector('.btcRub'));
 
@@ -1030,7 +1039,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function searchResultsHTML(companies) {
   return companies.map(function (company) {
-    return '\n        <a href="/companies/' + company.slug + '" class="search__result">\n          <strong>' + company.name + '</strong>\n        </a>\n    ';
+    var star = company.reviews.length ? '<span class="reviewStar">&#x2605;</span>' : '';
+    return '\n        <a href="/companies/' + company.slug + '" class="search__result">\n          <span><strong>' + company.name + '</strong></span>\n          <span>' + star + '\u041E\u0442\u0437\u044B\u0432\u044B - ' + company.reviews.length + '</span>\n        </a>\n    ';
   }).join('');
 };
 
@@ -1048,15 +1058,19 @@ function typeAhead(search) {
       searchResults.style.display = 'none';
       return; // stop!
     };
+
     //Show the search results!
     searchResults.style.display = 'block';
 
-    _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
-      if (res.data.length) {
-        searchResults.innerHTML = _dompurify2.default.sanitize(searchResultsHTML(res.data));
+    var companies = _axios2.default.get('/api/companies/near?lat=55.7&lng=37.6').then(function (res) {
+      var findMatch = res.data.filter(function (res) {
+        var regex = new RegExp('' + _this.value, 'gi');
+        return res.name.match(regex);
+      }).slice(0, 11);
+      if (findMatch.length > 0) {
+        searchResults.innerHTML = _dompurify2.default.sanitize(searchResultsHTML(findMatch));
         return;
       }
-      // tell them nothing came back
       searchResults.innerHTML = _dompurify2.default.sanitize('<div class="search__result">\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u0434\u043B\u044F ' + _this.value + ' \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E!</div>');
     }).catch(function (err) {
       console.log(err);
@@ -3039,6 +3053,290 @@ function ajaxHeart(e) {
 }
 
 exports.default = ajaxHeart;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _axios = __webpack_require__(1);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var sidebarBtc = function sidebarBtc(sidebar) {
+    if (!sidebar) return;
+
+    var btcRateSelect = document.querySelector('sidebar .bitcoin .sidebar__currency__rate--usd');
+    var ethRateSelect = document.querySelector('sidebar .etherium .sidebar__currency__rate--usd');
+    var btcCashRateSelect = document.querySelector('sidebar .bitcoin-cash .sidebar__currency__rate--usd');
+    var liteRateSelect = document.querySelector('sidebar .litecoin .sidebar__currency__rate--usd');
+    var xrpRateSelect = document.querySelector('sidebar .xrp .sidebar__currency__rate--usd');
+
+    var btcRateRubSelect = document.querySelector('sidebar .bitcoin .sidebar__currency__rate--rub');
+    var ethRateRubSelect = document.querySelector('sidebar .etherium .sidebar__currency__rate--rub');
+    var btcCashRateRubSelect = document.querySelector('sidebar .bitcoin-cash .sidebar__currency__rate--rub');
+    var liteRateRubSelect = document.querySelector('sidebar .litecoin .sidebar__currency__rate--rub');
+    var xrpRateRubSelect = document.querySelector('sidebar .xrp .sidebar__currency__rate--rub');
+
+    var rates = _axios2.default.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,BCH,XRP&tsyms=USD').then(function (res) {
+        var btcRate = res.data.BTC.USD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        var ethRate = res.data.ETH.USD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        var bchRate = res.data.BCH.USD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        var ltcRate = res.data.LTC.USD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        var xrpRate = res.data.XRP.USD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+        btcRateSelect.innerHTML = btcRate;
+        ethRateSelect.innerHTML = ethRate;
+        btcCashRateSelect.innerHTML = bchRate;
+        liteRateSelect.innerHTML = ltcRate;
+        xrpRateSelect.innerHTML = xrpRate;
+
+        var rub = _axios2.default.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,BCH,XRP&tsyms=RUB').then(function (res) {
+            var btcRate = res.data.BTC.RUB;
+            var ethRate = res.data.ETH.RUB;
+            var bchRate = res.data.BCH.RUB;
+            var ltcRate = res.data.LTC.RUB;
+            var xrpRate = res.data.XRP.RUB;
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+
+            btcRateRubSelect.innerHTML = '\u20BD' + numberWithCommas(btcRate);
+            ethRateRubSelect.innerHTML = '\u20BD' + numberWithCommas(ethRate);
+            btcCashRateRubSelect.innerHTML = '\u20BD' + numberWithCommas(bchRate);
+            liteRateRubSelect.innerHTML = '\u20BD' + numberWithCommas(ltcRate);
+            xrpRateRubSelect.innerHTML = '\u20BD' + numberWithCommas(xrpRate);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    }).catch(function (err) {
+        console.log(err);
+    });
+};
+
+exports.default = sidebarBtc;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _axios = __webpack_require__(1);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function calculator(calculator) {
+
+    if (!calculator) return;
+
+    calculator.addEventListener('submit', calculate);
+
+    function calculate(e) {
+
+        e.preventDefault();
+
+        // BITCOIN PRICE USD
+        var btc = _axios2.default.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(function (object) {
+            var USD = object.data.bpi.USD;
+
+
+            var hash = document.querySelector('input#hashRate').value;
+            var power = document.querySelector('input#watts').value;
+            var cost = document.querySelector('input#powerCost').value;
+            var difficulty = document.querySelector('input#difficulty').value;
+            //const reward = document.querySelector('input#blockReward').value;
+
+            var btcRateRaw = USD.rate;
+            var btcRate = parseFloat(btcRateRaw.split(',').join('')).toFixed(2);
+
+            //Coins Per Day
+            var coinsPerDayRaw = 12.5 * (86400 / (difficulty * (Math.pow(2, 32) / (hash * 1000000000))));
+            var coinsPerDay = coinsPerDayRaw.toFixed(6);
+
+            var powerCostDayRaw = power / 1000 * 24 * cost;
+            var powerCostDay = powerCostDayRaw.toFixed(2);
+
+            //Profit per Day
+            var profitPerDayRaw = coinsPerDay * btcRate - powerCostDay;
+            var profitPerDay = profitPerDayRaw.toFixed(2);
+
+            //Profit per Month
+            var profitPerMonthRaw = profitPerDay * 30;
+            var profitPerMonth = profitPerMonthRaw.toFixed(2);
+
+            var profitRatioPerDayRaw = profitPerDay / powerCostDay * 100;
+            var profitRatioPerDay = profitRatioPerDayRaw.toFixed();
+
+            function negative(value) {
+                var headerDiv = document.querySelectorAll('.header__values--details');
+                var headerLabel = document.querySelectorAll('.value__label');
+                var headerNum = document.querySelectorAll('.value__content');
+                var bodyMain = document.querySelectorAll('.firstone');
+                var periodName = document.querySelectorAll('.calculations__data--name');
+                var periodValue = document.querySelectorAll('.calculations__data--value');
+
+                if (value < 0) {
+
+                    headerDiv.forEach(function (header) {
+                        header.style.cssText = "border-color: #E29090; background: #FFE0E0";
+                    });
+
+                    headerLabel.forEach(function (label) {
+                        label.style.cssText = "color: #B13737";
+                    });
+
+                    headerNum.forEach(function (num) {
+                        num.style.cssText = "color: #B13737";
+                    });
+
+                    bodyMain.forEach(function (body) {
+                        body.style.cssText = "background: #F15C5C; border-color: #B13737";
+                    });
+
+                    periodName.forEach(function (name) {
+                        name.style.cssText = "background: #C14848; border: 2px solid #C14848";
+                    });
+
+                    periodValue.forEach(function (value) {
+                        value.style.cssText = "color: #B13737";
+                    });
+                } else {
+
+                    headerDiv.forEach(function (header) {
+                        header.style.cssText = "";
+                    });
+
+                    headerLabel.forEach(function (label) {
+                        label.style.cssText = "";
+                    });
+
+                    headerNum.forEach(function (num) {
+                        num.style.cssText = "";
+                    });
+
+                    bodyMain.forEach(function (body) {
+                        body.style.cssText = "";
+                    });
+
+                    periodName.forEach(function (name) {
+                        name.style.cssText = "";
+                    });
+
+                    periodValue.forEach(function (value) {
+                        value.style.cssText = "";
+                    });
+                }
+            }
+
+            negative(profitRatioPerDay);
+
+            // DATA BODY PER WEEK
+            var profitPerWeekRaw = profitPerDay * 7;
+            var profitPerWeek = profitPerWeekRaw.toFixed(2);
+
+            var powerCostPerWeekRaw = powerCostDay * 7;
+            var powerCostPerWeek = powerCostPerWeekRaw.toFixed(2);
+
+            var minedPerWeekRaw = coinsPerDay * 7;
+            var minedPerWeek = minedPerWeekRaw.toFixed(6);
+
+            // DATA BODY PER MONTH
+            var minedPerMonthRaw = coinsPerDay * 30;
+            var minedPerMonth = minedPerMonthRaw.toFixed(6);
+
+            var powerCostPerMonthRaw = powerCostDay * 30;
+            var powerCostPerMonth = powerCostPerMonthRaw.toFixed(2);
+
+            // DATA BODY PER YEAR
+
+            var profitPerYear = profitPerMonth * 12;
+            var minedPerYear = minedPerMonth * 12;
+            var powerCostPerYear = powerCostPerMonth * 12;
+
+            // Data OutPut Header
+            //Profit Costs Ratio
+            document.querySelector('.profitRatio').innerHTML = profitRatioPerDay + '%';
+            // Profit per Month
+            document.querySelector('.profitMonth').innerHTML = '$' + profitPerMonth;
+
+            // Data OutPut Body - DAY
+            document.querySelector('.profitPerDay').innerHTML = '$' + profitPerDay;
+            document.querySelector('.minedPerDay').innerHTML = '\u0243 ' + coinsPerDay;
+            document.querySelector('.costPerDay').innerHTML = '$' + powerCostDay;
+
+            // Data OutPut Body - WEEK
+            document.querySelector('.profitPerWeek').innerHTML = '$' + profitPerWeek;
+            document.querySelector('.minedPerWeek').innerHTML = '\u0243 ' + minedPerWeek;
+            document.querySelector('.costPerWeek').innerHTML = '$' + powerCostPerWeek;
+
+            // Data OutPut Body - MONTH
+            document.querySelector('.profitPerMonth').innerHTML = '$' + profitPerMonth;
+            document.querySelector('.minedPerMonth').innerHTML = '\u0243 ' + minedPerMonth;
+            document.querySelector('.costPerMonth').innerHTML = '$' + powerCostPerMonth;
+
+            // Data OutPut Body - YEAR
+            document.querySelector('.profitPerYear').innerHTML = '$' + profitPerYear.toFixed(2);
+            document.querySelector('.minedPerYear').innerHTML = '\u0243 ' + minedPerYear.toFixed(6);
+            document.querySelector('.costPerYear').innerHTML = '$ ' + powerCostPerYear.toFixed(2);
+
+            // RUB VALUES
+            var usd = _axios2.default.get('http://data.fixer.io/api/latest?access_key=0d4ec61383a12922d78ca24bb4e74bb7&latest?base=USD').then(function (object) {
+                var profitPerDayRub = object.data.rates.RUB * profitPerDay;
+                var powerCostDayRub = object.data.rates.RUB * powerCostDay;
+                var profitMonthRub = object.data.rates.RUB * profitPerMonth;
+                var profitWeekRub = object.data.rates.RUB * profitPerWeek;
+                var powerCostPerWeekRub = object.data.rates.RUB * powerCostPerWeek;
+                var powerCostPerMonthRub = object.data.rates.RUB * powerCostPerMonth;
+                var profitPerYearRub = object.data.rates.RUB * profitPerYear;
+                var powerCostPerYearRub = object.data.rates.RUB * powerCostPerYear;
+
+                // Data OutPut Body - DAY RUB
+                document.querySelector('.profitPerDayRub').innerHTML = '\u20BD' + profitPerDayRub.toFixed(2);
+                document.querySelector('.costPerDayRub').innerHTML = '\u20BD' + powerCostDayRub.toFixed();
+                document.querySelector('.profitMonthRub').innerHTML = '\u20BD' + profitMonthRub.toFixed();
+
+                // Data OutPut Body - WEEK RUB
+                document.querySelector('.profitPerWeekRub').innerHTML = '\u20BD' + profitWeekRub.toFixed(2);
+                document.querySelector('.costPerWeekRub').innerHTML = '\u20BD' + powerCostPerWeekRub.toFixed();
+
+                // MONTH
+                document.querySelector('.profitPerMonthRub').innerHTML = '\u20BD' + profitMonthRub.toFixed();
+                document.querySelector('.costPerMonthRub').innerHTML = '\u20BD' + powerCostPerMonthRub.toFixed();
+
+                //YEAR
+                document.querySelector('.profitPerYearRub').innerHTML = '\u20BD' + profitPerYearRub.toFixed();
+                document.querySelector('.costPerYearRub').innerHTML = '\u20BD' + powerCostPerYearRub.toFixed();
+
+                return;
+            }).catch(function (e) {
+                console.log(e);
+            });
+
+            return;
+        }).catch(function (e) {
+            console.log(e);
+        });
+    }
+}
+
+exports.default = calculator;
 
 /***/ })
 /******/ ]);

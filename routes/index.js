@@ -89,13 +89,14 @@ router.get('/top', companyController.getTopCompanies);
 router.get('/about', companyController.about);
 router.get('/contacts', companyController.contacts);
 router.get('/mining-2018', companyController.miningArticle);
+router.get('/mining-calculator', companyController.miningCalculator);
 
 
 /*
-  API
+  API 
 */
 
-router.get('/api/search', companyController.searchCompanies);
+//router.get('/api/search', companyController.searchCompanies);
 router.get('/api/companies/near', companyController.mapCompanies);
 
 router.post('/api/companies/:id/heart', companyController.heartCompany);

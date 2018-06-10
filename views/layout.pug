@@ -26,7 +26,7 @@ html
                   span #{item.title}
           .nav__section.nav__section--search
             .search
-              input.search__input(type="text" placeholder="Ввод..." name="search")
+              input.search__input(type="text" placeholder="Название компании..." name="search")
               .search__results
           ul.nav__section.nav__section--user
             if user
@@ -56,7 +56,26 @@ html
     .content
       block content
         p This is the default
-
+  
+      sidebar.sidebar
+        .sidebar__currency__container
+          each item in h.currency
+            .sidebar__currency(class=(item.name.toLowerCase().replace(' ', '-')))
+              .sidebar__currency__name
+                span.sidebar__currency__name--title #{item.name}
+              .sidebar__currency__rate
+                span.sidebar__currency__rate--usd $...
+                span.sidebar__currency__rate--rub ...
+        .sidebar__posts__container
+          a.sidebar__post(href="/mining-2018")
+            .sidebar__post--img 
+              <img alt="оборудование для майнинга" src="https://res.cloudinary.com/dlmeqtsfq/image/upload/c_scale,h_100,w_100/v1528546445/mining-2018-sidebar-100x100_xoies3.jpg"/>
+            h4 Что майнить в 2018?
+          a.sidebar__post(href="/mining-calculator")
+            .sidebar__post--img
+              <img alt="калькулятор майнинга" src="https://res.cloudinary.com/dlmeqtsfq/image/upload/c_scale,h_100,w_100/v1528547600/calculator_w9wpez.png"/>
+            h4 Калькулятор майнинга
+        
     footer.footer
       .footer__nav
         .footer__nav--container
@@ -81,6 +100,8 @@ html
               a.footer__nav--link(href="https://bittrust.ru/mining-2018") Майнинг Криптовалют в 2018 году
             li
               a.footer__nav--link(href="https://bittrust.ru/tags/prodazha-oborudovaniya-dlya-majninga") Продажа Оборудования для Майнинга
+            li
+              a.footer__nav--link(href="https://bittrust.ru/mining-calculator") Калькулятор Майнинга Криптовалют
       p © 2017 Все права защищены <a href="https://bittrust.ru" class="footer__link--logo">Bittrust.ru</a>
     
     block scripts

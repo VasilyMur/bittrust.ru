@@ -14,13 +14,15 @@ block content
     .inner.front-page
         .front-header
             h1 Калькулятор Майнинга 
-            +miningCalculator(company, tag) 
-        .front-header.disclosure
-            p <strong>Калькулятор</strong> доходности майнинга производит расчет на базе данных из открытых источников в <strong>реальном</strong> времени. Просчитай <strong>прибыльность</strong> майнинга Bitcoin он-лайн!
-                        p Расчет прибыльности майнинга с учетом следующих показателей:
+            p Расчет прибыльности майнинга с учетом следующих показателей:
             ul.calculator-list
                 li <strong>Hash Rate (Хешрейт)</strong> - Показатель <strong>мощности</strong> оборудования для майнинга. Чем быстрее оборудование считает хеши - тем <strong>быстрее</strong> зарабатываются биткойны или другая криптовалюта.
                 li <strong>Power (Потребление Электроэнергии)</strong> - количество энергии, которое потребляет ваш майнер.
                 li <strong>Power Cost (Стоимость Электроэнергии)</strong> - важно указывать тарифы, действующие в <strong>вашем</strong> городе!
                 li <strong>Pool Fee (Комиссия Пула)</strong> Фактически Пул - это сервер, на котором происходит <strong>распределение</strong> задач  расчета криптографической подписи блока между всеми участниками.
                 li <strong>Уровень Сложности</strong> - показатель сложности добычи <strong>постоянно</strong> увеличивается. Наш калькулятор майнинга <strong>автоматически</strong> подтягивает действующий показатель из глобальной базы данных.
+        .front-header.iframe-calc-front
+            iframe(src="https://www.cryptocompare.com/mining/calculator/btc?HashingPower=120&amp;HashingUnit=MH%2Fs&amp;PowerConsumption=1200&amp;CostPerkWh=0.1" scrolling="yes" allowfullscreen="allowfullscreen" width="1100" height="700" frameborder="0")
+        .front-header.disclosure
+            p <strong>Калькулятор</strong> доходности майнинга производит расчет на базе данных из открытых источников в <strong>реальном</strong> времени. 
+            p Просчитай <strong>прибыльность</strong> майнинга Bitcoin, Etherium, LiteCoin, Dash, ZCash(ZEC), Monero (XMR), EthereumClassic (ETC) и PascalCoin (PASC)!

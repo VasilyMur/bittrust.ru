@@ -14,40 +14,41 @@ block meta
   meta(name="viewport" content="width=device-width, initial-scale=1")
 
 block content
-  .single
-    .single__hero
-      - const imgAlt = title ? `Компания ${title}` : ' '
-      - const compImg = company.photo ? `/uploads/${company.photo}` : 'https://res.cloudinary.com/dlmeqtsfq/image/upload/v1517219087/company_oaczb1.jpg'
-      img.single__image(src=`${compImg}` alt=`${imgAlt}`)
-      h2.title.title--single
-        a(href=`/companies/${company.slug}`) #{title}
-  .single__details.inner
-    img.single__map(src=h.staticMap(company.location.coordinates))
-    p.single__location= company.location.address
-    p= company.description
-    .single__contacts
-      | Тел.: 
-      a.single__contacts--tel(href=`tel:${company.tel}`)  #{company.tel}
-      br
-      | Сайт:
-      a.single__contacts--site(href=`${company.url}` rel="nofollow")  #{company.url}
-    
-    if company.tags
-      ul.tags
-        each tag in company.tags
-          li.tag
-            a.tag__link(href=`/tags/${h.slugify(tag).toLowerCase()}`)
-              span.tag__text= tag
+  .inner
+    .single
+      .single__hero
+        - const imgAlt = title ? `Компания ${title}` : ' '
+        - const compImg = company.photo ? `/uploads/${company.photo}` : 'https://res.cloudinary.com/dlmeqtsfq/image/upload/v1517219087/company_oaczb1.jpg'
+        img.single__image(src=`${compImg}` alt=`${imgAlt}`)
+        h2.title.title--single
+          a(href=`/companies/${company.slug}`) #{title}
+    .single__details.inner
+      img.single__map(src=h.staticMap(company.location.coordinates))
+      p.single__location= company.location.address
+      p= company.description
+      .single__contacts
+        | Тел.: 
+        a.single__contacts--tel(href=`tel:${company.tel}`)  #{company.tel}
+        br
+        | Сайт:
+        a.single__contacts--site(href=`${company.url}` rel="nofollow")  #{company.url}
+      
+      if company.tags
+        ul.tags
+          each tag in company.tags
+            li.tag
+              a.tag__link(href=`/tags/${h.slugify(tag).toLowerCase()}`)
+                span.tag__text= tag
 
-    .single__slogan 
-      a(href="http://bittrust.ru/register") Зарегистрируйся 
-      |, оставь свой отзыв и поставь оценку! Помоги хорошим людям!
-    
-    if user
-      +reviewForm(company)
+      .single__slogan 
+        a(href="http://bittrust.ru/register") Зарегистрируйся 
+        |, оставь свой отзыв и поставь оценку! Помоги хорошим людям!
+      
+      if user
+        +reviewForm(company)
 
-    if company.reviews
-      .reviews
-        each review in company.reviews
-          .review
-            +review(review)
+      if company.reviews
+        .reviews
+          each review in company.reviews
+            .review
+              +review(review)

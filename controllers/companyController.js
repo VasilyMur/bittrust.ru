@@ -33,7 +33,7 @@ exports.getCompanies = async (req, res) => {
     const skip = (page * limit) - limit;
 
     // Change 1
-    const tag = "Оборудование для майнинга";
+    const tag = "Купить майнер";
     const tagCard = "Продажа Оборудования для Майнинга";
 
     // Query the DB for a list of all Companies
@@ -60,7 +60,7 @@ exports.getCompanies = async (req, res) => {
       res.redirect(`/companies/page/${pages}`);
       return;
     }
-
+ 
     // New Part: Get TAGS
     const tags = await Company.getTagsList();
     const tagsEng = tags.map(tag => {
@@ -369,26 +369,26 @@ exports.submitCompany = (req, res) => {
 };
 
 // API interface to search within Name and Description Text fields
-exports.searchCompanies = async (req, res) => {
-  try {
-    // score - adds a temp field to the result with score
-    const companies = await Company
-    // 1- find Companies that match API query
-    .find(
-      { $text: { $search: req.query.q }},
-      { score: { $meta: 'textScore' }}
-    )
-    // 2 - Sort based on higher score
-    .sort({
-    score: { $meta: 'textScore' }
-  })
-    .limit(10);
+// exports.searchCompanies = async (req, res) => {
+//   try {
+//     // score - adds a temp field to the result with score
+//     const companies = await Company
+//     // 1- find Companies that match API query
+//     .find(
+//       { $text: { $search: req.query.q }},
+//       { score: { $meta: 'textScore' }}
+//     )
+//     // 2 - Sort based on higher score
+//     .sort({
+//     score: { $meta: 'textScore' }
+//   })
+//     .limit(10);
 
-  res.json(companies);
-  } catch (e) {
-    res.render('error', {message:'Something went wrong'});
-  }
-};
+//   res.json(companies);
+//   } catch (e) {
+//     res.render('error', {message:'Something went wrong'});
+//   }
+// };
 
 // API interface to search for nearby Companies on GOOGLE Maps
 exports.mapCompanies = async (req, res) => {
@@ -477,6 +477,9 @@ exports.contacts = (req, res) => {
 
 // Contacts Page
 exports.miningArticle = (req, res) => {
-  res.render('mining-2018.pug', { title: 'Майнинг в 2018 году: методы и перспективы' });
+  res.render('mining-2018', { title: 'Майнинг в 2018 году: методы и перспективы' });
 }; 
 
+exports.miningCalculator = (req, res) => {
+  res.render('calculator', { title: 'Калькулятор Майнинга Криптовалют' });
+}; 

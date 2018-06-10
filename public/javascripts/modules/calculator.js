@@ -165,8 +165,7 @@ function calculator(calculator) {
                  document.querySelector('.costPerYear').innerHTML = `$ ${powerCostPerYear.toFixed(2)}`;
 
                 // RUB VALUES
-                const usd = axios.get('https://api.fixer.io/latest?base=USD').then(object => {
-            
+                const usd = axios.get('http://data.fixer.io/api/latest?access_key=0d4ec61383a12922d78ca24bb4e74bb7&latest?base=USD').then(object => {
                     const profitPerDayRub = object.data.rates.RUB * profitPerDay;
                     const powerCostDayRub = object.data.rates.RUB * powerCostDay;
                     const profitMonthRub = object.data.rates.RUB * profitPerMonth;

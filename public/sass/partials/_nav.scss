@@ -31,7 +31,7 @@
     transition: transform 0.2s;
     border-bottom: 5px solid transparent;
     svg {
-      width: 40px;
+      width: 30px;
       transition: all 0.2s;
       fill: white;
       margin-bottom: 1rem;
@@ -42,8 +42,7 @@
       svg {
         transform: scale(1.2)
       }
-      background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, $yellow 85%, #48ded4 95%) fixed;
-      // background: none;
+      background: #2b3035;
     }
     &--logo {
       &:hover {
@@ -52,8 +51,9 @@
         }
       }
       svg {
-        width: 70px;
+        width: 50px;
         margin: 0;
+        fill: #F9BA00;
       }
     }
   }

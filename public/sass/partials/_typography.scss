@@ -104,4 +104,7 @@ p {
   margin-top: -9rem;
   font-size: 6rem;
   text-align: center;
-}
+  @media all and (max-width: 550px) {
+    font-size: 5rem;
+  }
+} 

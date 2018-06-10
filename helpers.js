@@ -28,4 +28,12 @@ exports.menu = [
   { slug: '/about', title: 'О нас', icon: 'store', },
 ];
 
+exports.currency = [
+  {name: 'Bitcoin'},
+  {name: 'Etherium'},
+  {name: 'Bitcoin Cash'},
+  {name: 'LiteCoin'},
+  {name: 'XRP'}
+]
+
 
