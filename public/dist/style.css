@@ -985,7 +985,7 @@ select {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
 
@@ -1333,7 +1333,7 @@ select {
   height: 500px; }
 
 .popup {
-  width: 300px; }
+  max-width: 220px; }
   .popup img {
     width: 100%; }
 
@@ -1650,8 +1650,19 @@ select {
       font-weight: bold;
       font-size: 3rem; }
   .front-header p {
-    margin-top: 0;
-    line-height: 1.6; }
+    line-height: 1.4;
+    margin: 1rem 0; }
+  .front-header ul {
+    margin: 10px 0;
+    line-height: 1.4;
+    padding-left: 2rem; }
+  .front-header ul li {
+    list-style: none; }
+  .front-header ul li:before {
+    content: '\25A0';
+    margin-right: 0.5rem;
+    color: #ffc600;
+    font-size: 20px; }
 
 .front-grid {
   max-width: 720px; }
@@ -1691,8 +1702,45 @@ select {
       padding: 10px 50px; }
   .newcomps__bullets ul {
     margin-top: 0; }
-  .newcomps__bullets li {
-    list-style-type: square; }
+  .newcomps__bullets ul li {
+    list-style: none; }
+  .newcomps__bullets ul li:before {
+    content: '\25A0';
+    margin-right: 0.5rem;
+    color: #ffc600;
+    font-size: 20px; }
+
+.below-main-content {
+  background: #fff;
+  padding: 20px;
+  margin: 2rem 0; }
+  .below-main-content h2 {
+    letter-spacing: 0.5px;
+    font-weight: normal;
+    font-size: 2rem;
+    margin: 1rem auto 2rem;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0px;
+    color: #fff;
+    background: #333;
+    border-left: 50px solid #ffc600; }
+  .below-main-content span {
+    margin-left: 10px;
+    display: inline-block; }
+  .below-main-content p {
+    line-height: 1.4; }
+  .below-main-content ul {
+    margin: 10px 0;
+    line-height: 1.4;
+    padding-left: 2rem; }
+  .below-main-content ul li {
+    list-style: none; }
+  .below-main-content ul li:before {
+    content: '\25A0';
+    margin-right: 0.5rem;
+    color: #ffc600;
+    font-size: 20px; }
 
 .front-slogan {
   background-color: #ffffff;
@@ -1755,6 +1803,8 @@ select {
     font-size: 2.5rem; } }
 
 @media all and (max-width: 640px) {
+  .below-main-content h2 {
+    font-size: 1.8rem; }
   .front-header__container {
     width: 100%; }
   .newcomps__header__number {
@@ -1762,7 +1812,11 @@ select {
     grid-template-rows: 1fr 1fr;
     max-height: 80px; }
     .newcomps__header__number h1 {
-      font-size: 2.5rem; } }
+      font-size: 2.5rem; }
+  .below-main-content {
+    padding: 20px 10px; }
+    .below-main-content ul {
+      padding-left: 0; } }
 
 @media all and (max-width: 1010px) {
   .iframe-calc-front {

@@ -12,10 +12,23 @@
     }
 
   p {
-    margin-top: 0;
-    line-height: 1.6;
+    line-height: 1.4;
+    margin: 1rem 0;
   }
-
+  ul {
+    margin: 10px 0;
+    line-height: 1.4;
+    padding-left: 2rem;
+  }
+  ul li {
+    list-style: none;
+  }
+  ul li:before {
+    content: '\25A0';
+    margin-right: 0.5rem;
+    color: #ffc600;
+    font-size: 20px;
+  }
 }
 
 .front-grid {
@@ -56,10 +69,58 @@
     ul {
       margin-top: 0;
     }
-    li {
-      list-style-type: square;
+    ul li {
+      list-style: none;
+    }
+    ul li:before {
+      content: '\25A0';
+      margin-right: 0.5rem;
+      color: #ffc600;
+      font-size: 20px;
     }
   }
+}
+
+.below-main-content {
+  background: #fff;
+  padding: 20px;
+  margin: 2rem 0;
+  h2 {
+    letter-spacing: 0.5px;
+    font-weight: normal;
+    font-size: 2rem;
+    margin: 1rem auto 2rem;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0px;
+    color: #fff;
+    background: #333;
+    border-left: 50px solid #ffc600;
+  }
+  span {
+    margin-left: 10px;
+    display: inline-block;
+  }
+  p {
+    line-height: 1.4;
+  }
+  ul {
+    margin: 10px 0;
+    line-height: 1.4;
+    padding-left: 2rem;
+  }
+
+  ul li {
+    list-style: none;
+  }
+
+  ul li:before {
+    content: '\25A0';
+    margin-right: 0.5rem;
+    color: #ffc600;
+    font-size: 20px;
+  }
+
 }
 
 .front-slogan {
@@ -136,6 +197,11 @@
 }
 
 @media all and (max-width: 640px) {
+  .below-main-content {
+    h2{
+      font-size: 1.8rem;
+    }
+  }
   .front-header__container {
     width: 100%;
   }
@@ -145,6 +211,12 @@
     max-height: 80px;
     h1 {
       font-size: 2.5rem;
+    }
+  }
+  .below-main-content {
+    padding: 20px 10px;
+    ul {
+      padding-left: 0;
     }
   }
 }
